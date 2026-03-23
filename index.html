@@ -248,7 +248,8 @@
   .add-input {
     flex: 1; padding: 10px 12px;
     border: 1px solid var(--border); border-radius: 10px;
-    font-family: 'DM Sans', sans-serif; font-size: 0.85rem;
+    font-family: 'DM Sans', sans-serif; font-size: 0.9rem;
+    font-weight: 500;
     background: var(--cream); color: var(--ink); outline: none;
   }
   .add-input:focus { border-color: var(--terracotta); }
@@ -320,7 +321,8 @@
   .form-label { font-size: 0.75rem; font-weight: 600; color: var(--ink-light); margin-bottom: 4px; display: block; }
   .form-input {
     width: 100%; padding: 10px 12px; border: 1px solid var(--border);
-    border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: 0.85rem;
+    border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: 0.9rem;
+    font-weight: 500;
     background: var(--cream); color: var(--ink); outline: none;
   }
   .form-input:focus { border-color: var(--terracotta); }
@@ -361,7 +363,8 @@
   }
   .notepad textarea {
     width: 100%; min-height: 260px; border: none; background: none;
-    font-family: 'DM Sans', sans-serif; font-size: 0.88rem;
+    font-family: 'DM Sans', sans-serif; font-size: 0.95rem;
+    font-weight: 500;
     color: var(--ink); resize: vertical; outline: none; line-height: 1.8;
   }
   .notepad-footer { display: flex; justify-content: flex-end; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); }
@@ -371,7 +374,7 @@
   .oggi-card {
     background: var(--ink);
     border-radius: 16px;
-    padding: 16px;
+    padding: 20px;
     margin-bottom: 8px;
     box-shadow: var(--shadow-hover);
     color: var(--cream);
@@ -382,7 +385,7 @@
   }
   .oggi-title {
     font-family: 'Playfair Display', serif;
-    font-size: 1.1rem; color: var(--cream);
+    font-size: 1.25rem; color: var(--cream);
   }
   .oggi-giorno {
     font-size: 0.75rem; color: rgba(245,240,232,0.5);
@@ -416,31 +419,32 @@
     margin-bottom: 10px;
     background: var(--ink);
     border-radius: 12px;
-    padding: 9px 13px;
+    padding: 14px 16px;
     box-shadow: var(--shadow);
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 10px;
+    gap: 6px;
   }
   .frase-icona {
-    font-size: 1.1rem;
+    font-size: 1.3rem;
     opacity: 0.8;
     flex-shrink: 0;
   }
   .frase-testo {
     font-family: 'Great Vibes', cursive;
-    font-size: 0.95rem;
+    font-size: 1.15rem;
     font-weight: 400;
     color: #E8CC88;
-    line-height: 1.5;
+    line-height: 1.6;
     text-align: center;
   }
   .frase-autore {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 0.65rem;
+    font-size: 0.75rem;
     font-style: italic;
     color: rgba(232,204,136,0.6);
-    margin-top: 3px;
+    margin-top: 2px;
     letter-spacing: 0.05em;
     text-align: center;
   }
@@ -605,6 +609,300 @@
 
   /* QUICK LIST */
   .quick-list { background: var(--warm-white); border: 1px solid var(--border); border-radius: 14px; padding: 4px 18px 10px; box-shadow: var(--shadow); margin-bottom: 24px; }
+
+  /* ── AI VOICE ── */
+  .ai-voice-wrap {
+    background: linear-gradient(160deg, #1a3a2a 0%, #2d5a3d 100%);
+    border-radius: 20px;
+    padding: 20px 16px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    position: relative;
+    overflow: hidden;
+  }
+  .ai-voice-wrap::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 30% 40%, rgba(201,168,76,0.08) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .ai-api-row {
+    width: 100%;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .ai-api-input {
+    flex: 1;
+    background: rgba(26,58,42,0.7);
+    border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 10px;
+    padding: 9px 12px;
+    color: #f0e6c8;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem;
+    outline: none;
+  }
+  .ai-api-input::placeholder { color: rgba(160,144,112,0.7); }
+  .ai-api-btn {
+    background: #c9a84c;
+    color: #1a3a2a;
+    border: none;
+    border-radius: 10px;
+    padding: 9px 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 0.8rem;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .ai-api-status {
+    font-size: 0.72rem;
+    color: rgba(160,144,112,0.8);
+    text-align: center;
+    margin-top: -10px;
+  }
+  .ai-api-status.ok { color: #7cc47c; }
+
+  /* Microfono */
+  .ai-mic-ring {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .ai-mic-ring::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 1.5px solid rgba(201,168,76,0.3);
+    animation: aiRingPulse 3s ease-in-out infinite;
+  }
+  .ai-mic-ring::after {
+    content: '';
+    position: absolute;
+    inset: -10px;
+    border-radius: 50%;
+    border: 1px solid rgba(201,168,76,0.12);
+    animation: aiRingPulse 3s ease-in-out infinite 0.5s;
+  }
+  @keyframes aiRingPulse {
+    0%,100% { opacity:0.4; transform:scale(1); }
+    50% { opacity:0.8; transform:scale(1.04); }
+  }
+  .ai-mic-btn {
+    width: 94px; height: 94px;
+    border-radius: 50%;
+    border: none;
+    background: radial-gradient(circle at 35% 35%, #3d7a52, #2d5a3d);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 0 1px rgba(201,168,76,0.25), inset 0 1px 0 rgba(255,255,255,0.1);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    position: relative; z-index: 1;
+  }
+  .ai-mic-btn:active { transform: scale(0.96); }
+  .ai-mic-btn.listening {
+    background: radial-gradient(circle at 35% 35%, #5a9a6a, #2d7a4a);
+    animation: aiMicPulse 1.2s ease-in-out infinite;
+  }
+  .ai-mic-btn.thinking {
+    background: radial-gradient(circle at 35% 35%, #c4a96a, #c9a84c);
+    animation: aiMicSpin 2s linear infinite;
+  }
+  .ai-mic-btn.speaking {
+    background: radial-gradient(circle at 35% 35%, #7a9a6a, #4a7a5a);
+    animation: aiMicPulse 0.8s ease-in-out infinite;
+  }
+  @keyframes aiMicPulse {
+    0%,100% { box-shadow: 0 0 0 0 rgba(201,168,76,0.5), 0 8px 32px rgba(0,0,0,0.4); }
+    50% { box-shadow: 0 0 0 16px rgba(201,168,76,0.0), 0 8px 32px rgba(0,0,0,0.4); }
+  }
+  @keyframes aiMicSpin {
+    0% { filter: hue-rotate(0deg); }
+    100% { filter: hue-rotate(30deg); }
+  }
+  .ai-mic-btn svg { width: 36px; height: 36px; color: #e8d5a3; }
+  .ai-mic-btn.thinking svg { display: none; }
+  .ai-mic-spinner {
+    display: none;
+    width: 30px; height: 30px;
+    border: 2px solid rgba(26,58,42,0.3);
+    border-top-color: #1a3a2a;
+    border-radius: 50%;
+    animation: aiSpin 0.8s linear infinite;
+  }
+  .ai-mic-btn.thinking .ai-mic-spinner { display: block; }
+  @keyframes aiSpin { to { transform: rotate(360deg); } }
+  .ai-mic-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.95rem;
+    color: rgba(160,144,112,0.9);
+    letter-spacing: 1px;
+    text-align: center;
+    margin-top: -10px;
+  }
+
+  /* Audio waves */
+  .ai-waves {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    height: 22px;
+  }
+  .ai-waves.active { display: flex; }
+  .ai-wave-bar { width: 3px; border-radius: 3px; background: #c9a84c; opacity: 0.7; }
+  .ai-wave-bar:nth-child(1) { animation: aiWave 1s ease-in-out infinite 0.0s; }
+  .ai-wave-bar:nth-child(2) { animation: aiWave 1s ease-in-out infinite 0.15s; }
+  .ai-wave-bar:nth-child(3) { animation: aiWave 1s ease-in-out infinite 0.3s; }
+  .ai-wave-bar:nth-child(4) { animation: aiWave 1s ease-in-out infinite 0.45s; }
+  .ai-wave-bar:nth-child(5) { animation: aiWave 1s ease-in-out infinite 0.6s; }
+  @keyframes aiWave { 0%,100% { height:5px; } 50% { height:18px; } }
+
+  /* Trascrizione */
+  .ai-transcript {
+    width: 100%;
+    background: rgba(45,90,61,0.25);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 14px;
+    padding: 14px 16px;
+    min-height: 52px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s;
+  }
+  .ai-transcript.active { border-color: rgba(201,168,76,0.4); background: rgba(45,90,61,0.4); }
+  .ai-transcript-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    color: #e8d5a3;
+    font-style: italic;
+    line-height: 1.4;
+    flex: 1;
+  }
+  .ai-transcript-text.placeholder { color: rgba(160,144,112,0.6); }
+  .ai-transcript-text.interim { color: rgba(232,213,163,0.6); }
+
+  /* Risposta */
+  .ai-response {
+    width: 100%;
+    background: rgba(201,168,76,0.07);
+    border: 1px solid rgba(201,168,76,0.18);
+    border-radius: 14px;
+    padding: 16px;
+    min-height: 64px;
+    position: relative;
+    overflow: hidden;
+  }
+  .ai-response::before {
+    content: '';
+    position: absolute;
+    top:0; left:0; width:3px; height:100%;
+    background: linear-gradient(to bottom, #c9a84c, transparent);
+    border-radius: 3px 0 0 3px;
+  }
+  .ai-response-label {
+    font-size: 0.65rem;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: #c9a84c;
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+  .ai-response-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: #f5ead0;
+  }
+  .ai-response-text.placeholder { color: rgba(160,144,112,0.6); font-style: italic; font-size: 0.95rem; }
+
+  /* Token box */
+  .ai-token-box {
+    width: 100%;
+    background: rgba(26,58,42,0.5);
+    border: 1px solid rgba(201,168,76,0.12);
+    border-radius: 12px;
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .ai-token-header { display: flex; justify-content: space-between; align-items: center; }
+  .ai-token-title { font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; color: rgba(160,144,112,0.7); }
+  .ai-token-reset {
+    font-size: 0.68rem; color: rgba(160,144,112,0.7);
+    background: none; border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 6px; padding: 2px 8px; cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .ai-token-stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
+  .ai-token-stat {
+    background: rgba(45,90,61,0.4); border-radius: 8px;
+    padding: 8px 6px; text-align: center;
+  }
+  .ai-token-val { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; color: #e8d5a3; line-height: 1; }
+  .ai-token-lbl { font-size: 0.6rem; letter-spacing: 1px; text-transform: uppercase; color: rgba(160,144,112,0.7); margin-top: 2px; }
+  .ai-token-bar-wrap { background: rgba(26,58,42,0.6); border-radius: 4px; height: 3px; overflow: hidden; }
+  .ai-token-bar { height: 100%; background: linear-gradient(to right, #3d7a52, #c9a84c); border-radius: 4px; transition: width 0.6s ease; width: 0%; }
+  .ai-token-cost { text-align: center; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 0.88rem; color: #c9a84c; }
+  .ai-limit-row { display: flex; align-items: center; gap: 6px; background: rgba(45,90,61,0.3); border-radius: 8px; padding: 8px 10px; }
+  .ai-limit-row label { font-size: 0.68rem; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(160,144,112,0.7); flex-shrink: 0; }
+  .ai-limit-input {
+    flex: 1; background: rgba(26,58,42,0.7); border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 6px; padding: 5px 8px; color: #f0e6c8;
+    font-family: 'DM Sans', sans-serif; font-size: 0.82rem; outline: none;
+  }
+  .ai-limit-bar-wrap { background: rgba(26,58,42,0.6); border-radius: 4px; height: 3px; overflow: hidden; }
+  .ai-limit-bar { height: 100%; border-radius: 4px; transition: width 0.6s ease; width: 0%; background: #3d7a52; }
+  .ai-limit-bar.warn { background: #c9a84c; }
+  .ai-limit-bar.danger { background: #c0392b; }
+  .ai-limit-pct { font-size: 0.7rem; color: rgba(160,144,112,0.7); text-align: center; }
+  .ai-limit-pct.warn { color: #c9a84c; }
+  .ai-limit-pct.danger { color: #e8a0a0; }
+
+  /* Suggerimenti */
+  .ai-chips { width: 100%; display: flex; flex-direction: column; gap: 7px; }
+  .ai-chip {
+    background: rgba(45,90,61,0.3);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 50px;
+    padding: 9px 16px;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.92rem;
+    color: #e8d5a3;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.2s;
+  }
+  .ai-chip:active { background: rgba(45,90,61,0.55); border-color: rgba(201,168,76,0.4); }
+
+  /* Errore */
+  .ai-error {
+    width: 100%;
+    background: rgba(180,60,60,0.15);
+    border: 1px solid rgba(180,60,60,0.3);
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 0.82rem;
+    color: #e8a0a0;
+    text-align: center;
+    display: none;
+  }
+  .ai-error.visible { display: block; }
+
 </style>
 </head>
 <body>
@@ -670,7 +968,51 @@
       </div>
     </div>
 
-    <h2 class="section-title" style="margin-top:14px">✅ Da fare questa settimana</h2>
+    <h2 class="section-title" style="margin-top:14px">🔔 Promemoria Ricorrenti</h2>
+    <div id="promemoria-home"></div>
+    <button class="add-scadenza-btn" onclick="toggleForm('form-nuovo-promemoria')" style="margin-bottom:14px">＋ Aggiungi promemoria ricorrente</button>
+    <div class="add-scadenza-form" id="form-nuovo-promemoria">
+      <div class="form-row">
+        <label class="form-label">Nome promemoria *</label>
+        <input class="form-input" id="prom-nome" placeholder="Es. Pillola, Vitamina D, Palestra...">
+      </div>
+      <div class="form-row">
+        <label class="form-label">Emoji</label>
+        <input class="form-input" id="prom-emoji" placeholder="Es. 💊 🏃 🐕" maxlength="4">
+      </div>
+      <div class="form-row">
+        <label class="form-label">Frequenza *</label>
+        <select class="form-input" id="prom-freq">
+          <option value="daily">Ogni giorno</option>
+          <option value="weekly_1">Ogni lunedì</option>
+          <option value="weekly_2">Ogni martedì</option>
+          <option value="weekly_3">Ogni mercoledì</option>
+          <option value="weekly_4">Ogni giovedì</option>
+          <option value="weekly_5">Ogni venerdì</option>
+          <option value="weekly_6">Ogni sabato</option>
+          <option value="weekly_0">Ogni domenica</option>
+        </select>
+      </div>
+      <div class="form-actions">
+        <button class="form-save" onclick="salvaPromemoria()">💾 Salva</button>
+        <button class="form-cancel" onclick="toggleForm('form-nuovo-promemoria')">Annulla</button>
+      </div>
+    </div>
+
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-top:14px;margin-bottom:10px">
+      <h2 class="section-title" style="margin-bottom:0;flex:1">✅ Da fare questa settimana</h2>
+      <button onclick="toggleForm('form-quick-add')" style="width:28px;height:28px;border-radius:50%;background:var(--ink);color:#E8CC88;border:none;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-left:8px">＋</button>
+    </div>
+    <div class="add-scadenza-form" id="form-quick-add" style="margin-bottom:10px">
+      <div class="form-row">
+        <label class="form-label">Cosa devi fare? *</label>
+        <input class="form-input" id="quick-new-text" placeholder="Es. Chiamare il medico, Pagare bolletta...">
+      </div>
+      <div class="form-actions">
+        <button class="form-save" onclick="addQuickTask()">💾 Aggiungi</button>
+        <button class="form-cancel" onclick="toggleForm('form-quick-add')">Annulla</button>
+      </div>
+    </div>
     <div id="quickWeekly"></div>
   </div>
 
@@ -971,43 +1313,8 @@
         <button class="add-btn" style="width:100%;margin-top:8px;background:var(--olive);font-size:0.78rem" onclick="resetValigia()">🔄 Reset spunte valigia</button>
       </div>
     </div>
-  </div>
-
-  <!-- NOTE -->
-  <div class="panel" id="panel-note">
-    <h2 class="section-title">📝 Note</h2>
-    <div class="notepad">
-      <textarea id="noteArea" placeholder="Note libere, contatti utili, promemoria...
-
-💡 Idee:
-- Idraulico: 
-- Elettricista: 
-- Codice WiFi: 
-- Garanzie elettrodomestici: "></textarea>
-      <div class="notepad-footer">
-        <button class="save-btn" onclick="saveNote()">💾 Salva</button>
-      </div>
-    </div>
-
-    <!-- BACKUP -->
-    <h2 class="section-title" style="margin-top:20px">🔄 Backup dati</h2>
-    <div class="task-group" style="margin-bottom:14px">
-      <div class="task-group-header" style="cursor:default">
-        <div class="group-title">💾 Esporta & Importa</div>
-      </div>
-      <div style="padding:16px 18px">
-        <p style="font-size:0.82rem;color:var(--ink-light);margin-bottom:14px;line-height:1.6">Prima di aggiornare l'app, esporta i tuoi dati. Dopo la reinstallazione, importali per ritrovare tutto.</p>
-        <button class="form-save" style="width:100%;margin-bottom:10px;padding:12px" onclick="esportaDati()">📤 Esporta dati (copia testo)</button>
-        <textarea id="importArea" class="form-input" style="min-height:80px;margin-bottom:10px;font-size:0.72rem" placeholder="Incolla qui il testo esportato per importare..."></textarea>
-        <button class="form-save" style="width:100%;background:#8B6F47;padding:12px" onclick="importaDati()">📥 Importa dati</button>
-      </div>
-    </div>
-  </div>
-  <!-- CALCOLI -->
-  <div class="panel" id="panel-calcoli">
-    <h2 class="section-title">🧮 Calcolatori</h2>
-
-    <!-- IVA -->
+    <h2 class="section-title" style="margin-top:6px">🧮 Calcolatori</h2>
+<!-- IVA -->
     <div class="task-group" style="margin-bottom:14px">
       <div class="task-group-header" onclick="toggleExtraGroup('calc-iva')" style="cursor:pointer">
         <div class="group-title">💶 <span>Calcolo IVA</span></div>
@@ -1126,23 +1433,118 @@
       </div>
     </div>
   </div>
+  </div>
+
+  <!-- NOTE -->
+  <div class="panel" id="panel-note">
+    <h2 class="section-title">📝 Note</h2>
+    <div class="notepad">
+      <textarea id="noteArea" placeholder="Note libere, contatti utili, promemoria...
+
+💡 Idee:
+- Idraulico: 
+- Elettricista: 
+- Codice WiFi: 
+- Garanzie elettrodomestici: "></textarea>
+      <div class="notepad-footer">
+        <button class="save-btn" onclick="saveNote()">💾 Salva</button>
+      </div>
+    </div>
+
+    <!-- BACKUP -->
+    <h2 class="section-title" style="margin-top:20px">🔄 Backup dati</h2>
+    <div class="task-group" style="margin-bottom:14px">
+      <div class="task-group-header" style="cursor:default">
+        <div class="group-title">💾 Esporta & Importa</div>
+      </div>
+      <div style="padding:16px 18px">
+        <p style="font-size:0.82rem;color:var(--ink-light);margin-bottom:14px;line-height:1.6">Prima di aggiornare l'app, esporta i tuoi dati. Dopo la reinstallazione, importali per ritrovare tutto.</p>
+        <button class="form-save" style="width:100%;margin-bottom:10px;padding:12px" onclick="esportaDati()">📤 Esporta dati (copia testo)</button>
+        <textarea id="importArea" class="form-input" style="min-height:80px;margin-bottom:10px;font-size:0.72rem" placeholder="Incolla qui il testo esportato per importare..."></textarea>
+        <button class="form-save" style="width:100%;background:#8B6F47;padding:12px" onclick="importaDati()">📥 Importa dati</button>
+      </div>
+    </div>
+  </div>
+
 
   <!-- AI ASSISTANT -->
   <div class="panel" id="panel-ai">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
-      <h2 class="section-title" style="margin-bottom:0">🤖 Assistente AI</h2>
-      <span style="font-size:0.65rem;color:rgba(28,43,31,0.4);letter-spacing:0.04em">Claude AI 🇮🇹</span>
-    </div>
-    <div id="ai-messages" style="min-height:120px;max-height:320px;overflow-y:auto;margin-bottom:8px;display:flex;flex-direction:column;gap:8px"></div>
-    <div style="display:flex;gap:8px;align-items:flex-end;margin-bottom:8px">
-      <textarea id="ai-input" class="form-input" style="flex:1;min-height:42px;max-height:100px;resize:none;line-height:1.4" placeholder="Scrivi un messaggio..." onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();inviaMessaggioAI()}"></textarea>
-      <button onclick="inviaMessaggioAI()" style="width:42px;height:42px;border-radius:12px;background:var(--olive);border:none;color:#E8CC88;font-size:1.2rem;cursor:pointer;flex-shrink:0">➤</button>
-    </div>
-    <div style="display:flex;gap:5px;flex-wrap:wrap">
-      <button onclick="domandaRapida('Cosa scade nei prossimi 15 giorni?')" style="font-size:0.68rem;padding:4px 9px;border-radius:20px;background:var(--ink);color:var(--cream);border:none;cursor:pointer">⏰ Scadenze</button>
-      <button onclick="domandaRapida('Chi compie gli anni questo mese?')" style="font-size:0.68rem;padding:4px 9px;border-radius:20px;background:var(--ink);color:var(--cream);border:none;cursor:pointer">🎂 Compleanni</button>
-      <button onclick="domandaRapida('Cosa devo fare questa settimana?')" style="font-size:0.68rem;padding:4px 9px;border-radius:20px;background:var(--ink);color:var(--cream);border:none;cursor:pointer">✅ Da fare</button>
-      <button onclick="domandaRapida('Dammi un consiglio per la casa')" style="font-size:0.68rem;padding:4px 9px;border-radius:20px;background:var(--ink);color:var(--cream);border:none;cursor:pointer">🏠 Casa</button>
+    <div class="ai-voice-wrap">
+
+      <!-- API Key -->
+      <div style="width:100%">
+        <div class="ai-api-row">
+          <input type="password" class="ai-api-input" id="aiApiKey" placeholder="sk-ant-... (API Key Anthropic)" />
+          <button class="ai-api-btn" onclick="aiSalvaKey()">Salva</button>
+        </div>
+        <div class="ai-api-status" id="aiApiStatus">Inserisci la tua API key per iniziare</div>
+      </div>
+
+      <!-- Microfono -->
+      <div class="ai-mic-ring">
+        <button class="ai-mic-btn" id="aiMicBtn" onclick="aiToggleListening()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="9" y="2" width="6" height="11" rx="3"/>
+            <path d="M5 10a7 7 0 0 0 14 0"/>
+            <line x1="12" y1="19" x2="12" y2="22"/>
+            <line x1="9" y1="22" x2="15" y2="22"/>
+          </svg>
+          <div class="ai-mic-spinner"></div>
+        </button>
+      </div>
+      <div class="ai-mic-label" id="aiMicLabel">Tocca per parlare</div>
+      <div class="ai-waves" id="aiWaves">
+        <div class="ai-wave-bar"></div><div class="ai-wave-bar"></div>
+        <div class="ai-wave-bar"></div><div class="ai-wave-bar"></div>
+        <div class="ai-wave-bar"></div>
+      </div>
+
+      <!-- Trascrizione -->
+      <div class="ai-transcript" id="aiTranscript">
+        <span style="font-size:1.1rem;opacity:0.6">🎙️</span>
+        <div class="ai-transcript-text placeholder" id="aiTranscriptText">La tua domanda apparirà qui...</div>
+      </div>
+
+      <!-- Risposta -->
+      <div class="ai-response">
+        <div class="ai-response-label">Risposta</div>
+        <div class="ai-response-text placeholder" id="aiResponseText">Chiedi qualcosa sulla tua casa, le scadenze, i compleanni...</div>
+      </div>
+
+      <!-- Token -->
+      <div class="ai-token-box">
+        <div class="ai-token-header">
+          <div class="ai-token-title">📊 Consumo Token</div>
+          <button class="ai-token-reset" onclick="aiResetToken()">Reset</button>
+        </div>
+        <div class="ai-token-stats">
+          <div class="ai-token-stat"><div class="ai-token-val" id="aiTokTotal">0</div><div class="ai-token-lbl">Totale</div></div>
+          <div class="ai-token-stat"><div class="ai-token-val" id="aiTokSessione">0</div><div class="ai-token-lbl">Sessione</div></div>
+          <div class="ai-token-stat"><div class="ai-token-val" id="aiTokDomande">0</div><div class="ai-token-lbl">Domande</div></div>
+        </div>
+        <div class="ai-token-bar-wrap"><div class="ai-token-bar" id="aiTokenBar"></div></div>
+        <div class="ai-token-cost" id="aiTokCosto">~$0.0000</div>
+        <div class="ai-limit-row">
+          <label>Limite $</label>
+          <input class="ai-limit-input" type="number" id="aiLimitInput" min="0.01" step="0.5" placeholder="5.00" />
+          <button class="ai-token-reset" onclick="aiSaveLimit()">OK</button>
+        </div>
+        <div class="ai-limit-bar-wrap"><div class="ai-limit-bar" id="aiLimitBar"></div></div>
+        <div class="ai-limit-pct" id="aiLimitPct">Nessun limite impostato</div>
+      </div>
+
+      <!-- Errore -->
+      <div class="ai-error" id="aiError"></div>
+
+      <!-- Suggerimenti -->
+      <div class="ai-chips">
+        <div class="ai-chip" onclick="aiChip(this)">Cosa scade questo mese?</div>
+        <div class="ai-chip" onclick="aiChip(this)">Cosa butto domani?</div>
+        <div class="ai-chip" onclick="aiChip(this)">Compleanni in arrivo?</div>
+        <div class="ai-chip" onclick="aiChip(this)">Devo annaffiare le piante?</div>
+        <div class="ai-chip" onclick="aiChip(this)">Cosa devo fare questa settimana?</div>
+      </div>
+
     </div>
   </div>
 
@@ -1165,10 +1567,6 @@
   <button class="nav-btn" onclick="showTab('garanzie', this)">
     <span class="nav-icon">🛡️</span>
     <span class="nav-label">Garanzie</span>
-  </button>
-  <button class="nav-btn" onclick="showTab('calcoli', this)">
-    <span class="nav-icon">🧮</span>
-    <span class="nav-label">Calcoli</span>
   </button>
   <button class="nav-btn" onclick="showTab('note', this)">
     <span class="nav-icon">📝</span>
@@ -1809,6 +2207,22 @@ function renderOggi() {
     items += '<div class="oggi-item"><div class="oggi-item-icon">🌿</div><div class="oggi-label"><div>Annaffia le piante</div><div class="oggi-sublabel">' + (daysSince === 0 ? 'Ancora da annaffiare oggi' : 'Ultima volta ' + daysSince + 'g fa') + '</div></div><button onclick="segnaAnnaffiato()" style="background:rgba(255,255,255,0.12);border:none;color:var(--cream);padding:5px 12px;border-radius:20px;font-size:0.75rem;cursor:pointer;">✓ Fatto</button></div>';
   }
 
+  // --- PROMEMORIA RICORRENTI ---
+  const promLista = JSON.parse(localStorage.getItem('mc_promemoria') || '[]');
+  const promFatti = JSON.parse(localStorage.getItem('mc_prom_fatti') || '{}');
+  const oggiStr = now.toDateString();
+  promLista.filter(function(p) {
+    if (p.freq === 'daily') return true;
+    if (p.freq.startsWith('weekly_')) return parseInt(p.freq.split('_')[1]) === oggi;
+    return false;
+  }).forEach(function(p) {
+    const fatto = promFatti[p.id] === oggiStr;
+    const btnFatto = fatto
+      ? '<span style="background:rgba(74,155,111,0.3);color:#4A9B6F;padding:5px 12px;border-radius:20px;font-size:0.75rem;">✓ Fatto</span>'
+      : '<button onclick="segnaPromemoriaFatto(\'' + p.id + '\');renderOggi()" style="background:rgba(255,255,255,0.12);border:none;color:var(--cream);padding:5px 12px;border-radius:20px;font-size:0.75rem;cursor:pointer;">✓ Fatto</button>';
+    items += '<div class="oggi-item" style="' + (fatto ? 'opacity:0.5' : '') + '"><div class="oggi-item-icon">' + p.emoji + '</div><div class="oggi-label"><div style="' + (fatto ? 'text-decoration:line-through' : '') + '">' + p.nome + '</div><div class="oggi-sublabel">' + (p.freq === 'daily' ? 'Ogni giorno' : 'Settimanale') + '</div></div>' + btnFatto + '</div>';
+  });
+
   // --- SCADENZE MENSILI FISSE entro 15gg ---
   // Bolletta luce + condominio il 15
   const giorniAl15 = 15 - giornomese;
@@ -1919,6 +2333,83 @@ function renderOggi() {
     '</div>';
 }
 
+function salvaPromemoria() {
+  const nome = document.getElementById('prom-nome').value.trim();
+  const emoji = document.getElementById('prom-emoji').value.trim() || '🔔';
+  const freq = document.getElementById('prom-freq').value;
+  if (!nome) { alert('Inserisci un nome!'); return; }
+  const lista = JSON.parse(localStorage.getItem('mc_promemoria') || '[]');
+  lista.push({ id: 'pr_' + Date.now(), nome, emoji, freq });
+  localStorage.setItem('mc_promemoria', JSON.stringify(lista));
+  document.getElementById('prom-nome').value = '';
+  document.getElementById('prom-emoji').value = '';
+  toggleForm('form-nuovo-promemoria');
+  renderPromemoria();
+  aiInitUI();
+  renderOggi();
+}
+
+function eliminaPromemoria(id) {
+  const lista = JSON.parse(localStorage.getItem('mc_promemoria') || '[]').filter(p => p.id !== id);
+  localStorage.setItem('mc_promemoria', JSON.stringify(lista));
+  renderPromemoria();
+  aiInitUI();
+  renderOggi();
+}
+
+function segnaPromemoriaFatto(id) {
+  const oggi = new Date().toDateString();
+  const fatti = JSON.parse(localStorage.getItem('mc_prom_fatti') || '{}');
+  fatti[id] = oggi;
+  localStorage.setItem('mc_prom_fatti', JSON.stringify(fatti));
+  renderOggi();
+  renderPromemoria();
+  aiInitUI();
+}
+
+function isPromemoriaAttivo(p) {
+  const oggi = new Date();
+  const dow = oggi.getDay(); // 0=dom, 1=lun...
+  if (p.freq === 'daily') return true;
+  if (p.freq.startsWith('weekly_')) {
+    return parseInt(p.freq.split('_')[1]) === dow;
+  }
+  return false;
+}
+
+function isPromemoriaFatto(id) {
+  const oggi = new Date().toDateString();
+  const fatti = JSON.parse(localStorage.getItem('mc_prom_fatti') || '{}');
+  return fatti[id] === oggi;
+}
+
+function renderPromemoria() {
+  const container = document.getElementById('promemoria-home');
+  if (!container) return;
+  const lista = JSON.parse(localStorage.getItem('mc_promemoria') || '[]');
+  const attivi = lista.filter(p => isPromemoriaAttivo(p));
+  if (!attivi.length) {
+    container.innerHTML = '';
+    return;
+  }
+  const html = attivi.map(p => {
+    const fatto = isPromemoriaFatto(p.id);
+    return `<div class="oggi-item" style="${fatto ? 'opacity:0.5' : ''}">
+      <div class="oggi-item-icon">${p.emoji}</div>
+      <div class="oggi-label">
+        <div style="${fatto ? 'text-decoration:line-through' : ''}">${p.nome}</div>
+        <div class="oggi-sublabel">${p.freq === 'daily' ? 'Ogni giorno' : 'Settimanale'}</div>
+      </div>
+      ${fatto
+        ? '<span style="background:rgba(74,155,111,0.3);color:#4A9B6F;padding:5px 12px;border-radius:20px;font-size:0.75rem;">✓ Fatto</span>'
+        : `<button onclick="segnaPromemoriaFatto('${p.id}')" style="background:rgba(255,255,255,0.12);border:none;color:var(--cream);padding:5px 12px;border-radius:20px;font-size:0.75rem;cursor:pointer;">✓ Fatto</button>`
+      }
+      <button onclick="eliminaPromemoria('${p.id}')" style="background:none;border:none;color:rgba(245,240,232,0.3);font-size:0.75rem;cursor:pointer;padding:4px 6px;">✕</button>
+    </div>`;
+  }).join('');
+  container.innerHTML = `<div style="background:var(--ink);border-radius:14px;padding:8px 16px;margin-bottom:10px">${html}</div>`;
+}
+
 function segnaAnnaffiato() {
   localStorage.setItem('mc_piante', Date.now().toString());
   renderOggi();
@@ -1973,10 +2464,25 @@ function renderStats() {
   `;
 }
 
+function addQuickTask() {
+  const text = document.getElementById('quick-new-text').value.trim();
+  if (!text) return;
+  const tasks = JSON.parse(localStorage.getItem('mc_quick_tasks') || '[]');
+  tasks.push({ id: 'qt_' + Date.now(), text: text });
+  localStorage.setItem('mc_quick_tasks', JSON.stringify(tasks));
+  document.getElementById('quick-new-text').value = '';
+  toggleForm('form-quick-add');
+  renderQuickWeekly();
+  renderPromemoria();
+  aiInitUI();
+}
+
 function renderQuickWeekly() {
   const container = document.getElementById('quickWeekly');
   const pending = weeklyData.flatMap(g => getAllItems(g).filter(i => !checkedItems[i.id])).slice(0, 5);
-  if (!pending.length) {
+  const customTasks = JSON.parse(localStorage.getItem('mc_quick_tasks') || '[]');
+  const customHtml = customTasks.map(t => `<div class="task-item"><div class="task-check" onclick="removeQuickTask('${t.id}')">${'✓'}</div><div class="task-text">${t.text}</div><button class="task-delete" onclick="removeQuickTask('${t.id}')">✕</button></div>`).join('');
+  if (!pending.length && !customTasks.length) {
     container.innerHTML = '<div class="quick-list"><p style="padding:12px 0;color:var(--olive);font-weight:600">🎉 Tutto completato questa settimana!</p></div>';
     return;
   }
@@ -1984,7 +2490,15 @@ function renderQuickWeekly() {
     const gId = weeklyData.find(g => getAllItems(g).find(t => t.id === i.id))?.id || '';
     return `<div class="task-item"><div class="task-check" onclick="toggleItem('${i.id}','${gId}');renderQuickWeekly()">${checkedItems[i.id]?'✓':''}</div><div class="task-text">${i.text}</div></div>`;
   }).join('');
-  container.innerHTML = `<div class="quick-list">${html}</div>`;
+  container.innerHTML = `<div class="quick-list">${html}${customHtml}</div>`;
+}
+
+function removeQuickTask(id) {
+  const tasks = JSON.parse(localStorage.getItem('mc_quick_tasks') || '[]').filter(t => t.id !== id);
+  localStorage.setItem('mc_quick_tasks', JSON.stringify(tasks));
+  renderQuickWeekly();
+  renderPromemoria();
+  aiInitUI();
 }
 
 function renderQuickScadenze() {
@@ -2160,108 +2674,258 @@ function startCountdown() {
 }
 
 
-// ===================== AI ASSISTANT =====================
-function getAIKey() {
-  return localStorage.getItem('mc_ai_key') || '';
+// ===================== AI VOICE ASSISTANT =====================
+let aiKey = localStorage.getItem('mc_ai_key') || '';
+let aiRecognition = null;
+let aiState = 'idle';
+let aiSynth = window.speechSynthesis;
+let aiTokTotale = parseInt(localStorage.getItem('mc_ai_tok_tot') || '0');
+let aiTokSessione = 0;
+let aiDomande = parseInt(localStorage.getItem('mc_ai_tok_dom') || '0');
+let aiCosto = parseFloat(localStorage.getItem('mc_ai_tok_costo') || '0');
+let aiLimite = parseFloat(localStorage.getItem('mc_ai_limite') || '0');
+const AI_COSTO_IN = 0.000003;
+const AI_COSTO_OUT = 0.000015;
+
+function aiInitUI() {
+  if (aiKey) {
+    document.getElementById('aiApiKey').value = aiKey;
+    document.getElementById('aiApiStatus').textContent = '✓ API key salvata';
+    document.getElementById('aiApiStatus').className = 'ai-api-status ok';
+  }
+  document.getElementById('aiTokTotal').textContent = aiTokTotale.toLocaleString('it');
+  document.getElementById('aiTokDomande').textContent = aiDomande;
+  document.getElementById('aiTokCosto').textContent = '~$' + aiCosto.toFixed(4);
+  if (aiLimite > 0) document.getElementById('aiLimitInput').value = aiLimite.toFixed(2);
+  aiUpdateLimitBar();
 }
-let aiCronologia = [];
 
-function getContestoApp() {
+function aiSalvaKey() {
+  aiKey = document.getElementById('aiApiKey').value.trim();
+  localStorage.setItem('mc_ai_key', aiKey);
+  document.getElementById('aiApiStatus').textContent = '✓ API key salvata';
+  document.getElementById('aiApiStatus').className = 'ai-api-status ok';
+}
+
+function aiGetContesto() {
   const now = new Date();
-  const oggi = now.toLocaleDateString('it-IT', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
-  const mese = now.getMonth() + 1;
+  const giorni = ['domenica','lunedì','martedì','mercoledì','giovedì','venerdì','sabato'];
+  const mesi = ['gennaio','febbraio','marzo','aprile','maggio','giugno','luglio','agosto','settembre','ottobre','novembre','dicembre'];
+  const dataStr = now.getDate() + ' ' + mesi[now.getMonth()] + ' ' + now.getFullYear();
+  const dowStr = giorni[now.getDay()];
   const giorno = now.getDate();
+  const mese = now.getMonth() + 1;
 
-  // Compleanni prossimi 30 giorni
+  // Differenziata
+  const diffMap = {0:'Nessuna',1:'🟡 Plastica',2:'📄 Carta',3:'🟡 Plastica',4:'🟤 Umido',5:'⚫ Indifferenziata',6:'🟤 Umido e 🟢 Vetro'};
+  const raccoltaOggi = diffMap[now.getDay()] || '—';
+
+  // Compleanni prossimi 30gg
   const cbProssimi = getAllCompleanni().filter(c => {
     const d = getDaysToCompleanno(c.giorno, c.mese);
     return d >= 0 && d <= 30;
-  }).map(c => c.nome + ' (' + getDaysToCompleanno(c.giorno, c.mese) + ' giorni)').join(', ');
+  }).map(c => c.nome + ' tra ' + getDaysToCompleanno(c.giorno, c.mese) + ' giorni').join(', ') || 'nessuno';
 
-  // Scadenze personali prossime
+  // Scadenze custom
   const scadCustom = JSON.parse(localStorage.getItem('mc_scadenze') || '[]');
   const scadProssime = scadCustom.filter(s => {
     const d = new Date(s.date); d.setHours(0,0,0,0);
-    const diff = Math.round((d - now) / (1000*60*60*24));
-    return diff >= 0 && diff <= 30;
-  }).map(s => s.title + ' (' + new Date(s.date).toLocaleDateString('it-IT') + ')').join(', ');
-
-  // Farmaci
-  const farmaci = JSON.parse(localStorage.getItem('mc_farmaci') || '[]').map(f => f.nome).join(', ');
+    return Math.round((d - now) / 86400000) >= 0 && Math.round((d - now) / 86400000) <= 30;
+  }).map(s => s.title + ' (' + new Date(s.date).toLocaleDateString('it-IT') + ')').join(', ') || 'nessuna';
 
   // Spesa
-  const spesa = JSON.parse(localStorage.getItem('mc_spesa') || '[]').filter(s => !s.fatto).map(s => s.testo).join(', ');
+  const spesa = JSON.parse(localStorage.getItem('mc_spesa') || '[]').filter(s => !s.fatto).map(s => s.testo).join(', ') || 'vuota';
 
-  return `Oggi è ${oggi}. 
-Compleanni/eventi nei prossimi 30 giorni: ${cbProssimi || 'nessuno'}.
-Scadenze personali prossime: ${scadProssime || 'nessuna'}.
-Farmaci in casa: ${farmaci || 'nessuno registrato'}.
-Lista spesa da fare: ${spesa || 'vuota'}.
-Scadenze fisse mensili: bolletta luce e condominio il 15, mutuo il 25.`;
+  // Farmaci
+  const farmaci = JSON.parse(localStorage.getItem('mc_farmaci') || '[]').map(f => f.nome).join(', ') || 'nessuno';
+
+  // Piante
+  const lastWatered = parseInt(localStorage.getItem('mc_piante') || '0');
+  const daysSince = Math.floor((Date.now() - lastWatered) / 86400000);
+  const pianteStatus = daysSince >= 1 ? 'VA ANNAFFIATA! Ultima volta ' + daysSince + ' giorni fa' : 'annaffiata oggi';
+
+  return `Sei l'assistente domestico di MyCasale, app familiare italiana. Rispondi in italiano, tono caldo e conciso. Usa emoji.
+
+📅 OGGI: ${dataStr} (${dowStr})
+🗑️ RACCOLTA: ${raccoltaOggi}
+🌿 PIANTE: ${pianteStatus}
+💶 SCADENZE FISSE: bolletta luce e condominio il 15, mutuo il 25 del mese
+🎂 COMPLEANNI PROSSIMI: ${cbProssimi}
+⏰ SCADENZE PERSONALI: ${scadProssime}
+🛒 LISTA SPESA: ${spesa}
+💊 FARMACI: ${farmaci}
+✈️ PROSSIMO VIAGGIO: Roma maggio 2026 (Internazionali BNL)`;
 }
 
-function aggiungiMessaggio(testo, tipo) {
-  const container = document.getElementById('ai-messages');
-  const div = document.createElement('div');
-  div.className = tipo === 'user' ? 'ai-msg-user' : tipo === 'loading' ? 'ai-msg-loading' : 'ai-msg-claude';
-  div.textContent = testo;
-  div.id = tipo === 'loading' ? 'ai-loading' : '';
-  container.appendChild(div);
-  container.scrollTop = container.scrollHeight;
-  return div;
+function aiToggleListening() {
+  if (!aiKey) { aiShowError('Inserisci prima la tua API key!'); return; }
+  if (aiState === 'thinking' || aiState === 'speaking') return;
+  if (aiState === 'listening') { aiStopListening(); } else { aiStartListening(); }
 }
 
-async function inviaMessaggioAI() {
-  let key = getAIKey();
-  if (!key) {
-    key = prompt('🔑 Inserisci la tua Anthropic API Key (verrà salvata solo sul tuo dispositivo):');
-    if (!key) return;
-    localStorage.setItem('mc_ai_key', key.trim());
-    key = key.trim();
+function aiStartListening() {
+  if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+    aiShowError('Il tuo browser non supporta il riconoscimento vocale. Usa Chrome.');
+    return;
   }
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  aiRecognition = new SR();
+  aiRecognition.lang = 'it-IT';
+  aiRecognition.interimResults = true;
+  aiRecognition.onstart = () => aiSetState('listening');
+  aiRecognition.onresult = (e) => {
+    const t = Array.from(e.results).map(r => r[0].transcript).join('');
+    aiSetTranscript(t, !e.results[e.results.length-1].isFinal);
+    if (e.results[e.results.length-1].isFinal) { aiRecognition.stop(); aiAskAI(t); }
+  };
+  aiRecognition.onerror = (e) => { aiSetState('idle'); aiShowError('Errore microfono: ' + e.error); };
+  aiRecognition.onend = () => { if (aiState === 'listening') aiSetState('idle'); };
+  aiRecognition.start();
+}
 
-  const input = document.getElementById('ai-input');
-  const testo = input.value.trim();
-  if (!testo) return;
-  input.value = '';
+function aiStopListening() {
+  if (aiRecognition) aiRecognition.stop();
+  aiSetState('idle');
+}
 
-  aggiungiMessaggio(testo, 'user');
-  const loading = aggiungiMessaggio('⏳ Sto pensando...', 'loading');
-
-  aiCronologia.push({ role: 'user', content: testo });
-
+async function aiAskAI(domanda) {
+  if (!domanda.trim()) { aiSetState('idle'); return; }
+  if (aiLimite > 0 && aiCosto >= aiLimite) {
+    aiShowError('⚠️ Limite di spesa raggiunto. Reimposta il limite per continuare.');
+    aiSetState('idle'); return;
+  }
+  aiSetState('thinking');
   try {
-    const risposta = await fetch('https://api.anthropic.com/v1/messages', {
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'x-api-key': key, 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' },
+      headers: { 'Content-Type': 'application/json', 'x-api-key': aiKey, 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' },
       body: JSON.stringify({
         model: 'claude-haiku-4-5-20251001',
-        max_tokens: 1024,
-        system: `Sei l'assistente personale di MyCasale, un'app familiare italiana. Rispondi sempre in italiano, in modo conciso e amichevole. Conosci questi dati dell'utente: ${getContestoApp()}. Non inventare dati che non hai. Puoi dare consigli pratici sulla casa, famiglia, scadenze e organizzazione.`,
-        messages: aiCronologia
+        max_tokens: 400,
+        system: aiGetContesto(),
+        messages: [{ role: 'user', content: domanda }]
       })
     });
-
-    const data = await risposta.json();
-    loading.remove();
-
-    if (data.content && data.content[0]) {
-      const testoRisposta = data.content[0].text;
-      aiCronologia.push({ role: 'assistant', content: testoRisposta });
-      aggiungiMessaggio(testoRisposta, 'claude');
-    } else {
-      aggiungiMessaggio('❌ Errore nella risposta. Riprova!', 'claude');
-    }
+    if (!resp.ok) { const e = await resp.json(); throw new Error(e.error?.message || 'Errore API'); }
+    const data = await resp.json();
+    const risposta = data.content[0].text;
+    aiUpdateToken(data.usage?.input_tokens || 0, data.usage?.output_tokens || 0);
+    aiSetResponse(risposta);
+    aiSpeak(risposta);
   } catch(e) {
-    loading.remove();
-    aggiungiMessaggio('❌ Errore di connessione. Controlla internet e riprova.', 'claude');
+    aiSetState('idle');
+    aiShowError('Errore: ' + e.message);
   }
 }
 
-function domandaRapida(testo) {
-  document.getElementById('ai-input').value = testo;
-  inviaMessaggioAI();
+function aiSpeak(testo) {
+  if (!window.speechSynthesis) { aiSetState('idle'); return; }
+  aiSynth.cancel();
+  const testoVoce = testo.replace(/[\u{1F300}-\u{1FAFF}]/gu, '').replace(/[•·]/g,'').trim();
+  const utt = new SpeechSynthesisUtterance(testoVoce);
+  utt.lang = 'it-IT'; utt.rate = 0.95; utt.pitch = 1;
+  const voci = aiSynth.getVoices();
+  const voceIT = voci.find(v => v.lang.startsWith('it'));
+  if (voceIT) utt.voice = voceIT;
+  utt.onstart = () => aiSetState('speaking');
+  utt.onend = () => aiSetState('idle');
+  utt.onerror = () => aiSetState('idle');
+  aiSynth.speak(utt);
 }
+
+function aiChip(el) {
+  if (!aiKey) { aiShowError('Inserisci prima la tua API key!'); return; }
+  if (aiState !== 'idle') return;
+  aiSetTranscript(el.textContent, false);
+  aiAskAI(el.textContent);
+}
+
+function aiSetState(state) {
+  aiState = state;
+  const btn = document.getElementById('aiMicBtn');
+  const lbl = document.getElementById('aiMicLabel');
+  const waves = document.getElementById('aiWaves');
+  btn.className = 'ai-mic-btn' + (state !== 'idle' ? ' ' + state : '');
+  const labels = { idle:'Tocca per parlare', listening:'Sto ascoltando...', thinking:'Sto pensando...', speaking:'Risposta in corso...' };
+  lbl.textContent = labels[state];
+  waves.className = 'ai-waves' + (state === 'speaking' ? ' active' : '');
+}
+
+function aiSetTranscript(testo, interim) {
+  const box = document.getElementById('aiTranscript');
+  const el = document.getElementById('aiTranscriptText');
+  el.textContent = testo;
+  el.className = 'ai-transcript-text' + (interim ? ' interim' : '');
+  box.className = 'ai-transcript' + (testo ? ' active' : '');
+}
+
+function aiSetResponse(testo) {
+  const el = document.getElementById('aiResponseText');
+  el.textContent = testo;
+  el.className = 'ai-response-text';
+}
+
+function aiShowError(msg) {
+  const el = document.getElementById('aiError');
+  el.textContent = msg; el.className = 'ai-error visible';
+  setTimeout(() => el.className = 'ai-error', 5000);
+}
+
+function aiUpdateToken(inp, out) {
+  aiTokSessione += inp + out;
+  aiTokTotale += inp + out;
+  aiDomande += 1;
+  aiCosto += inp * AI_COSTO_IN + out * AI_COSTO_OUT;
+  localStorage.setItem('mc_ai_tok_tot', aiTokTotale);
+  localStorage.setItem('mc_ai_tok_dom', aiDomande);
+  localStorage.setItem('mc_ai_tok_costo', aiCosto);
+  document.getElementById('aiTokTotal').textContent = aiTokTotale.toLocaleString('it');
+  document.getElementById('aiTokSessione').textContent = aiTokSessione.toLocaleString('it');
+  document.getElementById('aiTokDomande').textContent = aiDomande;
+  document.getElementById('aiTokCosto').textContent = '~$' + aiCosto.toFixed(4);
+  const pct = Math.min((aiTokSessione / 10000) * 100, 100);
+  document.getElementById('aiTokenBar').style.width = pct + '%';
+  aiUpdateLimitBar();
+}
+
+function aiResetToken() {
+  aiTokTotale = 0; aiTokSessione = 0; aiDomande = 0; aiCosto = 0;
+  localStorage.removeItem('mc_ai_tok_tot');
+  localStorage.removeItem('mc_ai_tok_dom');
+  localStorage.removeItem('mc_ai_tok_costo');
+  document.getElementById('aiTokTotal').textContent = '0';
+  document.getElementById('aiTokSessione').textContent = '0';
+  document.getElementById('aiTokDomande').textContent = '0';
+  document.getElementById('aiTokCosto').textContent = '~$0.0000';
+  document.getElementById('aiTokenBar').style.width = '0%';
+  aiUpdateLimitBar();
+}
+
+function aiSaveLimit() {
+  const val = parseFloat(document.getElementById('aiLimitInput').value);
+  if (isNaN(val) || val <= 0) { aiShowError('Inserisci un limite valido (es. 5.00)'); return; }
+  aiLimite = val;
+  localStorage.setItem('mc_ai_limite', val);
+  aiUpdateLimitBar();
+}
+
+function aiUpdateLimitBar() {
+  const pct = aiLimite > 0 ? Math.min((aiCosto / aiLimite) * 100, 100) : 0;
+  const bar = document.getElementById('aiLimitBar');
+  const pctEl = document.getElementById('aiLimitPct');
+  bar.style.width = pct + '%';
+  bar.className = 'ai-limit-bar' + (pct >= 90 ? ' danger' : pct >= 70 ? ' warn' : '');
+  if (aiLimite > 0) {
+    pctEl.textContent = pct.toFixed(1) + '% del limite $' + aiLimite.toFixed(2) + ' · Residuo: $' + Math.max(aiLimite - aiCosto, 0).toFixed(4);
+    pctEl.className = 'ai-limit-pct' + (pct >= 90 ? ' danger' : pct >= 70 ? ' warn' : '');
+  } else {
+    pctEl.textContent = 'Nessun limite impostato';
+    pctEl.className = 'ai-limit-pct';
+  }
+}
+
+// Compatibilità funzioni vecchie (chiamate da altre parti)
+function domandaRapida(testo) { aiSetTranscript(testo, false); aiAskAI(testo); }
 
 
 const regaliDB = {
@@ -2907,6 +3571,8 @@ window.onload = () => {
   renderValigia();
   renderDocumenti();
   renderQuickWeekly();
+  renderPromemoria();
+  aiInitUI();
   const n = localStorage.getItem('mc_note');
   if (n) document.getElementById('noteArea').value = n;
 
