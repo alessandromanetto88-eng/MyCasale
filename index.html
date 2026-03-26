@@ -1069,8 +1069,35 @@
         <input class="form-input" id="sc-new-title" placeholder="Es. Canone RAI, Abbonamento palestra...">
       </div>
       <div class="form-row">
+        <label class="form-label">Tipo scadenza *</label>
+        <select class="form-input" id="sc-new-tipo" onchange="aggiornaCampiScadenza()">
+          <option value="puntuale">📅 Puntuale (data specifica)</option>
+          <option value="mensile">🔁 Mensile (ogni mese)</option>
+          <option value="annuale">📆 Annuale (ogni anno)</option>
+        </select>
+      </div>
+      <div id="sc-campo-data" class="form-row">
         <label class="form-label">Data scadenza *</label>
         <input class="form-input" type="date" id="sc-new-date">
+      </div>
+      <div id="sc-campo-giorno" class="form-row" style="display:none">
+        <label class="form-label">Giorno del mese *</label>
+        <input class="form-input" type="number" id="sc-new-giorno" min="1" max="31" placeholder="Es. 15">
+      </div>
+      <div id="sc-campo-annuale" class="form-row" style="display:none">
+        <label class="form-label">Giorno e mese *</label>
+        <div style="display:flex;gap:8px">
+          <input class="form-input" type="number" id="sc-new-giorno-ann" min="1" max="31" placeholder="Giorno" style="width:50%">
+          <select class="form-input" id="sc-new-mese-ann" style="width:50%">
+            <option value="">Mese</option>
+            <option value="1">Gennaio</option><option value="2">Febbraio</option>
+            <option value="3">Marzo</option><option value="4">Aprile</option>
+            <option value="5">Maggio</option><option value="6">Giugno</option>
+            <option value="7">Luglio</option><option value="8">Agosto</option>
+            <option value="9">Settembre</option><option value="10">Ottobre</option>
+            <option value="11">Novembre</option><option value="12">Dicembre</option>
+          </select>
+        </div>
       </div>
       <div class="form-row">
         <label class="form-label">Note (opzionale)</label>
@@ -1940,24 +1967,68 @@ function renderScadenze() {
 
   // Scadenze personali
   const custom = JSON.parse(localStorage.getItem('mc_scadenze') || '[]');
+  const mesiNomi = ['','Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'];
   custom.forEach((s, idx) => {
-    const sem = getSemaforo(s.date);
-    const label = getSemaforoLabel(s.date);
     const card = document.createElement('div');
     card.className = 'scadenza-card gold';
-    card.innerHTML = `
-      <div class="sc-header">
-        <div class="sc-title">${s.title}</div>
-        <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
-          <div class="sc-semaforo ${sem}" title="${label}"></div>
-          <button class="sc-delete" onclick="deleteScadenza(${idx})">✕</button>
+
+    if (!s.tipo || s.tipo === 'puntuale') {
+      const sem = getSemaforo(s.date);
+      const label = getSemaforoLabel(s.date);
+      card.innerHTML = `
+        <div class="sc-header">
+          <div class="sc-title">${s.title}</div>
+          <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
+            <div class="sc-semaforo ${sem}" title="${label}"></div>
+            <button class="sc-delete" onclick="deleteScadenza(${idx})">✕</button>
+          </div>
         </div>
-      </div>
-      <div class="sc-date">📅 <strong>${formatDate(s.date)}</strong></div>
-      ${label ? `<div class="sc-note" style="color:${sem==='semaforo-red'?'#D94F4F':sem==='semaforo-yellow'?'#8C6E20':'#3D6B4F'};font-weight:500">${label}</div>` : ''}
-      ${s.note ? `<div class="sc-note">${s.note}</div>` : ''}
-      <div class="sc-tags"><span class="sc-tag">Personale</span></div>
-    `;
+        <div class="sc-date">📅 <strong>${formatDate(s.date)}</strong></div>
+        ${label ? `<div class="sc-note" style="color:${sem==='semaforo-red'?'#D94F4F':sem==='semaforo-yellow'?'#8C6E20':'#3D6B4F'};font-weight:500">${label}</div>` : ''}
+        ${s.note ? `<div class="sc-note">${s.note}</div>` : ''}
+        <div class="sc-tags"><span class="sc-tag">Personale</span></div>
+      `;
+    } else if (s.tipo === 'mensile') {
+      const now = new Date();
+      const giornoMese = now.getDate();
+      const giorniAl = s.giorno >= giornoMese ? s.giorno - giornoMese : (new Date(now.getFullYear(), now.getMonth()+1, s.giorno).getDate() + (30 - giornoMese));
+      const prossima = s.giorno >= giornoMese ? 'il ' + s.giorno + ' di questo mese' : 'il ' + s.giorno + ' del mese prossimo';
+      const semColor = giorniAl <= 3 ? 'semaforo-red' : giorniAl <= 7 ? 'semaforo-yellow' : 'semaforo-green';
+      card.innerHTML = `
+        <div class="sc-header">
+          <div class="sc-title">${s.title}</div>
+          <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
+            <div class="sc-semaforo ${semColor}"></div>
+            <button class="sc-delete" onclick="deleteScadenza(${idx})">✕</button>
+          </div>
+        </div>
+        <div class="sc-date">🔁 Ogni mese il giorno <strong>${s.giorno}</strong></div>
+        <div class="sc-note" style="color:#8C6E20;font-weight:500">Prossima scadenza: ${prossima}</div>
+        ${s.note ? `<div class="sc-note">${s.note}</div>` : ''}
+        <div class="sc-tags"><span class="sc-tag">Mensile</span><span class="sc-tag">Personale</span></div>
+      `;
+    } else if (s.tipo === 'annuale') {
+      const now = new Date();
+      let target = new Date(now.getFullYear(), s.mese - 1, s.giorno);
+      if (target < now) target = new Date(now.getFullYear() + 1, s.mese - 1, s.giorno);
+      const days = Math.round((target - now) / 86400000);
+      const semColor = days <= 7 ? 'semaforo-red' : days <= 15 ? 'semaforo-yellow' : 'semaforo-green';
+      const lbl = days === 0 ? 'Scade oggi!' : days === 1 ? 'Domani!' : 'Tra ' + days + ' giorni';
+      card.innerHTML = `
+        <div class="sc-header">
+          <div class="sc-title">${s.title}</div>
+          <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
+            <div class="sc-semaforo ${semColor}"></div>
+            <button class="sc-delete" onclick="deleteScadenza(${idx})">✕</button>
+          </div>
+        </div>
+        <div class="sc-date">📆 Ogni anno il <strong>${s.giorno} ${mesiNomi[s.mese]}</strong></div>
+        <div class="sc-note" style="color:${semColor==='semaforo-red'?'#D94F4F':semColor==='semaforo-yellow'?'#8C6E20':'#3D6B4F'};font-weight:500">${lbl}</div>
+        ${s.note ? `<div class="sc-note">${s.note}</div>` : ''}
+        <div class="sc-tags"><span class="sc-tag">Annuale</span><span class="sc-tag">Personale</span></div>
+      `;
+    }
+
     grid.appendChild(card);
   });
 }
@@ -1967,19 +2038,46 @@ function toggleAddScadenza() {
   form.classList.toggle('open');
 }
 
+function aggiornaCampiScadenza() {
+  const tipo = document.getElementById('sc-new-tipo').value;
+  document.getElementById('sc-campo-data').style.display = tipo === 'puntuale' ? '' : 'none';
+  document.getElementById('sc-campo-giorno').style.display = tipo === 'mensile' ? '' : 'none';
+  document.getElementById('sc-campo-annuale').style.display = tipo === 'annuale' ? '' : 'none';
+}
+
 function saveNewScadenza() {
   const title = document.getElementById('sc-new-title').value.trim();
-  const date = document.getElementById('sc-new-date').value;
+  const tipo = document.getElementById('sc-new-tipo').value;
   const note = document.getElementById('sc-new-note').value.trim();
-  if (!title || !date) { alert('Inserisci titolo e data!'); return; }
+  if (!title) { alert('Inserisci il titolo!'); return; }
+
   const custom = JSON.parse(localStorage.getItem('mc_scadenze') || '[]');
-  custom.push({ title, date, note });
-  // Sort by date
-  custom.sort((a,b) => new Date(a.date) - new Date(b.date));
+
+  if (tipo === 'puntuale') {
+    const date = document.getElementById('sc-new-date').value;
+    if (!date) { alert('Inserisci la data!'); return; }
+    custom.push({ title, date, note, tipo: 'puntuale' });
+    custom.sort((a,b) => new Date(a.date) - new Date(b.date));
+  } else if (tipo === 'mensile') {
+    const giorno = parseInt(document.getElementById('sc-new-giorno').value);
+    if (!giorno || giorno < 1 || giorno > 31) { alert('Inserisci un giorno valido (1-31)!'); return; }
+    custom.push({ title, note, tipo: 'mensile', giorno });
+  } else if (tipo === 'annuale') {
+    const giorno = parseInt(document.getElementById('sc-new-giorno-ann').value);
+    const mese = parseInt(document.getElementById('sc-new-mese-ann').value);
+    if (!giorno || !mese) { alert('Inserisci giorno e mese!'); return; }
+    custom.push({ title, note, tipo: 'annuale', giorno, mese });
+  }
+
   localStorage.setItem('mc_scadenze', JSON.stringify(custom));
   document.getElementById('sc-new-title').value = '';
   document.getElementById('sc-new-date').value = '';
   document.getElementById('sc-new-note').value = '';
+  document.getElementById('sc-new-giorno').value = '';
+  document.getElementById('sc-new-giorno-ann').value = '';
+  document.getElementById('sc-new-mese-ann').value = '';
+  document.getElementById('sc-new-tipo').value = 'puntuale';
+  aggiornaCampiScadenza();
   toggleAddScadenza();
   renderScadenze();
 }
@@ -2235,14 +2333,32 @@ function renderOggi() {
     items += '<div class="oggi-item"><div class="oggi-item-icon">🏠</div><div class="oggi-label"><div>Pagamento Mutuo</div><div class="oggi-sublabel">' + lbl25 + '</div></div></div>';
   }
 
-  // --- SCADENZE PERSONALI con data esatta entro 15gg ---
+  // --- SCADENZE PERSONALI ---
   const customScad = JSON.parse(localStorage.getItem('mc_scadenze') || '[]');
+  const mesiNomiOggi = ['','Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'];
   customScad.forEach(function(s) {
-    const d = new Date(s.date); d.setHours(0,0,0,0);
-    const days = Math.round((d - now) / (1000*60*60*24));
-    if (days >= 0 && days <= 15) {
-      const lbl = days === 0 ? 'Scade oggi!' : 'Scade tra ' + days + ' giorni';
-      items += '<div class="oggi-item"><div class="oggi-item-icon">⏰</div><div class="oggi-label"><div>' + s.title + '</div><div class="oggi-sublabel">' + lbl + '</div></div></div>';
+    if (!s.tipo || s.tipo === 'puntuale') {
+      const d = new Date(s.date); d.setHours(0,0,0,0);
+      const days = Math.round((d - now) / (1000*60*60*24));
+      if (days >= 0 && days <= 15) {
+        const lbl = days === 0 ? 'Scade oggi!' : 'Scade tra ' + days + ' giorni';
+        items += '<div class="oggi-item"><div class="oggi-item-icon">⏰</div><div class="oggi-label"><div>' + s.title + '</div><div class="oggi-sublabel">' + lbl + '</div></div></div>';
+      }
+    } else if (s.tipo === 'mensile') {
+      const giornoMese = now.getDate();
+      const giorniAl = s.giorno >= giornoMese ? s.giorno - giornoMese : -1;
+      if (giorniAl >= 0 && giorniAl <= 7) {
+        const lbl = giorniAl === 0 ? 'Scade oggi!' : 'Scade tra ' + giorniAl + ' giorni (il ' + s.giorno + ')';
+        items += '<div class="oggi-item"><div class="oggi-item-icon">🔁</div><div class="oggi-label"><div>' + s.title + '</div><div class="oggi-sublabel">' + lbl + '</div></div></div>';
+      }
+    } else if (s.tipo === 'annuale') {
+      let target = new Date(now.getFullYear(), s.mese - 1, s.giorno);
+      if (target < now) target = new Date(now.getFullYear() + 1, s.mese - 1, s.giorno);
+      const days = Math.round((target - now) / 86400000);
+      if (days >= 0 && days <= 15) {
+        const lbl = days === 0 ? 'Scade oggi!' : 'Scade tra ' + days + ' giorni (' + s.giorno + ' ' + mesiNomiOggi[s.mese] + ')';
+        items += '<div class="oggi-item"><div class="oggi-item-icon">📆</div><div class="oggi-label"><div>' + s.title + '</div><div class="oggi-sublabel">' + lbl + '</div></div></div>';
+      }
     }
   });
 
