@@ -2429,13 +2429,7 @@ function renderOggi() {
 
   const dataCompleta = now.toLocaleDateString('it-IT', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
 
-  // --- FRASE DEL GIORNO (fuori dalla card) ---
-  const dayOfYear = Math.floor((now - new Date(now.getFullYear(), 0, 0)) / (1000*60*60*24));
-  const frase = frasiDelGiorno[dayOfYear % frasiDelGiorno.length];
-  const fraseHtml = '<div class="frase-container"><div class="frase-icona">🖋️</div><div><div class="frase-testo">"' + frase.testo + '"</div><div class="frase-autore">— ' + frase.autore + '</div></div></div>';
-
   container.innerHTML =
-    fraseHtml +
     '<div class="oggi-card">' +
       '<div class="oggi-header" style="margin-bottom:14px">' +
         '<div class="oggi-giorno" style="font-size:0.82rem;color:rgba(245,240,232,0.85);text-transform:capitalize;letter-spacing:0.02em;font-weight:700;text-align:center;width:100%">' + dataCompleta + '</div>' +
@@ -2856,17 +2850,27 @@ function aiGetContesto() {
   const daysSince = Math.floor((Date.now() - lastWatered) / 86400000);
   const pianteStatus = daysSince >= 1 ? 'VA ANNAFFIATA! Ultima volta ' + daysSince + ' giorni fa' : 'annaffiata oggi';
 
-  return `Sei l'assistente domestico di MyCasale, app familiare italiana. Rispondi in italiano, tono caldo e conciso. Usa emoji.
+  // Tutti i compleanni con data precisa
+  const tuttiCb = getAllCompleanni().map(c => c.nome + ': ' + c.giorno + '/' + c.mese).join(', ') || 'nessuno';
 
-📅 OGGI: ${dataStr} (${dowStr})
-🗑️ RACCOLTA: ${raccoltaOggi}
-🌿 PIANTE: ${pianteStatus}
-💶 SCADENZE FISSE: bolletta luce e condominio il 15, mutuo il 25 del mese
-🎂 COMPLEANNI PROSSIMI: ${cbProssimi}
-⏰ SCADENZE PERSONALI: ${scadProssime}
-🛒 LISTA SPESA: ${spesa}
-💊 FARMACI: ${farmaci}
-✈️ PROSSIMO VIAGGIO: Roma maggio 2026 (Internazionali BNL)`;
+  return `Sei l'assistente domestico di MyCasale, app familiare italiana.
+Rispondi SEMPRE in italiano, tono caldo e conciso.
+NON usare mai markdown, asterischi, grassetto o simboli di formattazione nelle risposte. Scrivi solo testo semplice.
+Rispondi in modo diretto e preciso basandoti sui dati forniti. Se ti chiedono di una persona specifica, cerca il suo nome esatto nella lista.
+
+📅 OGGI: \${dataStr} (\${dowStr})
+🗑️ RACCOLTA RIFIUTI OGGI: \${raccoltaOggi}
+🌿 PIANTE: \${pianteStatus}
+💶 SCADENZE FISSE MENSILI: bolletta luce e condominio il 15, mutuo il 25 del mese
+⏰ SCADENZE PERSONALI PROSSIME (30gg): \${scadProssime}
+🛒 LISTA SPESA DA FARE: \${spesa}
+💊 FARMACI IN CASA: \${farmaci}
+✈️ PROSSIMO VIAGGIO: Roma maggio 2026 (Internazionali BNL)
+
+🎂 ELENCO COMPLETO COMPLEANNI ED EVENTI:
+\${tuttiCb}
+
+🎂 COMPLEANNI NEI PROSSIMI 30 GIORNI: \${cbProssimi}`;
 }
 
 function aiToggleListening() {
