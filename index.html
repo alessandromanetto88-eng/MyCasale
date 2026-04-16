@@ -610,300 +610,6 @@
   /* QUICK LIST */
   .quick-list { background: var(--warm-white); border: 1px solid var(--border); border-radius: 14px; padding: 4px 18px 10px; box-shadow: var(--shadow); margin-bottom: 24px; }
 
-  /* ── AI VOICE ── */
-  .ai-voice-wrap {
-    background: linear-gradient(160deg, #1a3a2a 0%, #2d5a3d 100%);
-    border-radius: 20px;
-    padding: 20px 16px 24px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 18px;
-    position: relative;
-    overflow: hidden;
-  }
-  .ai-voice-wrap::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse at 30% 40%, rgba(201,168,76,0.08) 0%, transparent 60%);
-    pointer-events: none;
-  }
-  .ai-api-row {
-    width: 100%;
-    display: flex;
-    gap: 8px;
-    align-items: center;
-  }
-  .ai-api-input {
-    flex: 1;
-    background: rgba(26,58,42,0.7);
-    border: 1px solid rgba(201,168,76,0.25);
-    border-radius: 10px;
-    padding: 9px 12px;
-    color: #f0e6c8;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.82rem;
-    outline: none;
-  }
-  .ai-api-input::placeholder { color: rgba(160,144,112,0.7); }
-  .ai-api-btn {
-    background: #c9a84c;
-    color: #1a3a2a;
-    border: none;
-    border-radius: 10px;
-    padding: 9px 14px;
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 600;
-    font-size: 0.8rem;
-    cursor: pointer;
-    white-space: nowrap;
-  }
-  .ai-api-status {
-    font-size: 0.72rem;
-    color: rgba(210,195,155,0.85);
-    text-align: center;
-    margin-top: -10px;
-  }
-  .ai-api-status.ok { color: #7cc47c; }
-
-  /* Microfono */
-  .ai-mic-ring {
-    position: relative;
-    width: 120px;
-    height: 120px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .ai-mic-ring::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 50%;
-    border: 1.5px solid rgba(201,168,76,0.3);
-    animation: aiRingPulse 3s ease-in-out infinite;
-  }
-  .ai-mic-ring::after {
-    content: '';
-    position: absolute;
-    inset: -10px;
-    border-radius: 50%;
-    border: 1px solid rgba(201,168,76,0.12);
-    animation: aiRingPulse 3s ease-in-out infinite 0.5s;
-  }
-  @keyframes aiRingPulse {
-    0%,100% { opacity:0.4; transform:scale(1); }
-    50% { opacity:0.8; transform:scale(1.04); }
-  }
-  .ai-mic-btn {
-    width: 94px; height: 94px;
-    border-radius: 50%;
-    border: none;
-    background: radial-gradient(circle at 35% 35%, #3d7a52, #2d5a3d);
-    box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 0 1px rgba(201,168,76,0.25), inset 0 1px 0 rgba(255,255,255,0.1);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
-    position: relative; z-index: 1;
-  }
-  .ai-mic-btn:active { transform: scale(0.96); }
-  .ai-mic-btn.listening {
-    background: radial-gradient(circle at 35% 35%, #5a9a6a, #2d7a4a);
-    animation: aiMicPulse 1.2s ease-in-out infinite;
-  }
-  .ai-mic-btn.thinking {
-    background: radial-gradient(circle at 35% 35%, #c4a96a, #c9a84c);
-    animation: aiMicSpin 2s linear infinite;
-  }
-  .ai-mic-btn.speaking {
-    background: radial-gradient(circle at 35% 35%, #7a9a6a, #4a7a5a);
-    animation: aiMicPulse 0.8s ease-in-out infinite;
-  }
-  @keyframes aiMicPulse {
-    0%,100% { box-shadow: 0 0 0 0 rgba(201,168,76,0.5), 0 8px 32px rgba(0,0,0,0.4); }
-    50% { box-shadow: 0 0 0 16px rgba(201,168,76,0.0), 0 8px 32px rgba(0,0,0,0.4); }
-  }
-  @keyframes aiMicSpin {
-    0% { filter: hue-rotate(0deg); }
-    100% { filter: hue-rotate(30deg); }
-  }
-  .ai-mic-btn svg { width: 36px; height: 36px; color: #e8d5a3; }
-  .ai-mic-btn.thinking svg { display: none; }
-  .ai-mic-spinner {
-    display: none;
-    width: 30px; height: 30px;
-    border: 2px solid rgba(26,58,42,0.3);
-    border-top-color: #1a3a2a;
-    border-radius: 50%;
-    animation: aiSpin 0.8s linear infinite;
-  }
-  .ai-mic-btn.thinking .ai-mic-spinner { display: block; }
-  @keyframes aiSpin { to { transform: rotate(360deg); } }
-  .ai-mic-label {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: 0.95rem;
-    color: #d4c49a;
-    letter-spacing: 1px;
-    text-align: center;
-    font-weight: 500;
-    margin-top: -10px;
-  }
-
-  /* Audio waves */
-  .ai-waves {
-    display: none;
-    justify-content: center;
-    align-items: center;
-    gap: 4px;
-    height: 22px;
-  }
-  .ai-waves.active { display: flex; }
-  .ai-wave-bar { width: 3px; border-radius: 3px; background: #c9a84c; opacity: 0.7; }
-  .ai-wave-bar:nth-child(1) { animation: aiWave 1s ease-in-out infinite 0.0s; }
-  .ai-wave-bar:nth-child(2) { animation: aiWave 1s ease-in-out infinite 0.15s; }
-  .ai-wave-bar:nth-child(3) { animation: aiWave 1s ease-in-out infinite 0.3s; }
-  .ai-wave-bar:nth-child(4) { animation: aiWave 1s ease-in-out infinite 0.45s; }
-  .ai-wave-bar:nth-child(5) { animation: aiWave 1s ease-in-out infinite 0.6s; }
-  @keyframes aiWave { 0%,100% { height:5px; } 50% { height:18px; } }
-
-  /* Trascrizione */
-  .ai-transcript {
-    width: 100%;
-    background: rgba(45,90,61,0.25);
-    border: 1px solid rgba(201,168,76,0.15);
-    border-radius: 14px;
-    padding: 14px 16px;
-    min-height: 52px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    transition: all 0.3s;
-  }
-  .ai-transcript.active { border-color: rgba(201,168,76,0.4); background: rgba(45,90,61,0.4); }
-  .ai-transcript-text {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1rem;
-    color: #f5e8c0;
-    font-style: italic;
-    line-height: 1.4;
-    flex: 1;
-  }
-  .ai-transcript-text.placeholder { color: rgba(200,185,145,0.75); }
-  .ai-transcript-text.interim { color: rgba(232,213,163,0.6); }
-
-  /* Risposta */
-  .ai-response {
-    width: 100%;
-    background: rgba(201,168,76,0.07);
-    border: 1px solid rgba(201,168,76,0.18);
-    border-radius: 14px;
-    padding: 16px;
-    min-height: 64px;
-    position: relative;
-    overflow: hidden;
-  }
-  .ai-response::before {
-    content: '';
-    position: absolute;
-    top:0; left:0; width:3px; height:100%;
-    background: linear-gradient(to bottom, #c9a84c, transparent);
-    border-radius: 3px 0 0 3px;
-  }
-  .ai-response-label {
-    font-size: 0.65rem;
-    letter-spacing: 2.5px;
-    text-transform: uppercase;
-    color: #c9a84c;
-    margin-bottom: 8px;
-    font-weight: 500;
-  }
-  .ai-response-text {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.1rem;
-    font-weight: 400;
-    line-height: 1.6;
-    color: #faf0d8;
-  }
-  .ai-response-text.placeholder { color: rgba(210,195,155,0.75); font-style: italic; font-size: 0.95rem; }
-
-  /* Token box */
-  .ai-token-box {
-    width: 100%;
-    background: rgba(26,58,42,0.5);
-    border: 1px solid rgba(201,168,76,0.12);
-    border-radius: 12px;
-    padding: 12px 14px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-  .ai-token-header { display: flex; justify-content: space-between; align-items: center; }
-  .ai-token-title { font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; color: rgba(210,195,155,0.85); }
-  .ai-token-reset {
-    font-size: 0.68rem; color: rgba(160,144,112,0.7);
-    background: none; border: 1px solid rgba(201,168,76,0.2);
-    border-radius: 6px; padding: 2px 8px; cursor: pointer;
-    font-family: 'DM Sans', sans-serif;
-  }
-  .ai-token-stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
-  .ai-token-stat {
-    background: rgba(45,90,61,0.4); border-radius: 8px;
-    padding: 8px 6px; text-align: center;
-  }
-  .ai-token-val { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; color: #f5e8c0; line-height: 1; }
-  .ai-token-lbl { font-size: 0.6rem; letter-spacing: 1px; text-transform: uppercase; color: rgba(210,195,155,0.8); margin-top: 2px; }
-  .ai-token-bar-wrap { background: rgba(26,58,42,0.6); border-radius: 4px; height: 3px; overflow: hidden; }
-  .ai-token-bar { height: 100%; background: linear-gradient(to right, #3d7a52, #c9a84c); border-radius: 4px; transition: width 0.6s ease; width: 0%; }
-  .ai-token-cost { text-align: center; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 0.88rem; color: #c9a84c; }
-  .ai-limit-row { display: flex; align-items: center; gap: 6px; background: rgba(45,90,61,0.3); border-radius: 8px; padding: 8px 10px; width: 100%; box-sizing: border-box; overflow: hidden; }
-  .ai-limit-row label { font-size: 0.68rem; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(160,144,112,0.7); flex-shrink: 0; }
-  .ai-limit-input {
-    flex: 1; min-width: 0; background: rgba(26,58,42,0.7); border: 1px solid rgba(201,168,76,0.2);
-    border-radius: 6px; padding: 5px 8px; color: #f0e6c8;
-    font-family: 'DM Sans', sans-serif; font-size: 0.82rem; outline: none;
-  }
-  .ai-limit-bar-wrap { background: rgba(26,58,42,0.6); border-radius: 4px; height: 3px; overflow: hidden; }
-  .ai-limit-bar { height: 100%; border-radius: 4px; transition: width 0.6s ease; width: 0%; background: #3d7a52; }
-  .ai-limit-bar.warn { background: #c9a84c; }
-  .ai-limit-bar.danger { background: #c0392b; }
-  .ai-limit-pct { font-size: 0.7rem; color: rgba(210,195,155,0.8); text-align: center; }
-  .ai-limit-pct.warn { color: #c9a84c; }
-  .ai-limit-pct.danger { color: #e8a0a0; }
-
-  /* Suggerimenti */
-  .ai-chips { width: 100%; display: flex; flex-direction: column; gap: 7px; }
-  .ai-chip {
-    background: rgba(45,90,61,0.3);
-    border: 1px solid rgba(201,168,76,0.15);
-    border-radius: 50px;
-    padding: 9px 16px;
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: 0.92rem;
-    color: #f0e2b8;
-    cursor: pointer;
-    text-align: center;
-    transition: all 0.2s;
-  }
-  .ai-chip:active { background: rgba(45,90,61,0.55); border-color: rgba(201,168,76,0.4); }
-
-  /* Errore */
-  .ai-error {
-    width: 100%;
-    background: rgba(180,60,60,0.15);
-    border: 1px solid rgba(180,60,60,0.3);
-    border-radius: 10px;
-    padding: 10px 14px;
-    font-size: 0.82rem;
-    color: #e8a0a0;
-    text-align: center;
-    display: none;
-  }
-  .ai-error.visible { display: block; }
 
 </style>
 </head>
@@ -1069,35 +775,8 @@
         <input class="form-input" id="sc-new-title" placeholder="Es. Canone RAI, Abbonamento palestra...">
       </div>
       <div class="form-row">
-        <label class="form-label">Tipo scadenza *</label>
-        <select class="form-input" id="sc-new-tipo" onchange="aggiornaCampiScadenza()">
-          <option value="puntuale">📅 Puntuale (data specifica)</option>
-          <option value="mensile">🔁 Mensile (ogni mese)</option>
-          <option value="annuale">📆 Annuale (ogni anno)</option>
-        </select>
-      </div>
-      <div id="sc-campo-data" class="form-row">
         <label class="form-label">Data scadenza *</label>
         <input class="form-input" type="date" id="sc-new-date">
-      </div>
-      <div id="sc-campo-giorno" class="form-row" style="display:none">
-        <label class="form-label">Giorno del mese *</label>
-        <input class="form-input" type="number" id="sc-new-giorno" min="1" max="31" placeholder="Es. 15">
-      </div>
-      <div id="sc-campo-annuale" class="form-row" style="display:none">
-        <label class="form-label">Giorno e mese *</label>
-        <div style="display:flex;gap:8px">
-          <input class="form-input" type="number" id="sc-new-giorno-ann" min="1" max="31" placeholder="Giorno" style="width:50%">
-          <select class="form-input" id="sc-new-mese-ann" style="width:50%">
-            <option value="">Mese</option>
-            <option value="1">Gennaio</option><option value="2">Febbraio</option>
-            <option value="3">Marzo</option><option value="4">Aprile</option>
-            <option value="5">Maggio</option><option value="6">Giugno</option>
-            <option value="7">Luglio</option><option value="8">Agosto</option>
-            <option value="9">Settembre</option><option value="10">Ottobre</option>
-            <option value="11">Novembre</option><option value="12">Dicembre</option>
-          </select>
-        </div>
       </div>
       <div class="form-row">
         <label class="form-label">Note (opzionale)</label>
@@ -1108,6 +787,10 @@
         <button class="form-cancel" onclick="toggleAddScadenza()">Annulla</button>
       </div>
     </div>
+
+    <!-- STORICO COMPLETAMENTI -->
+    <h2 class="section-title" style="margin-top:20px">📋 Storico completamenti</h2>
+    <div id="storicoScadenze"></div>
   </div>
 
   <!-- EVENTI -->
@@ -1496,80 +1179,6 @@
   </div>
 
 
-  <!-- AI ASSISTANT -->
-  <div class="panel" id="panel-ai">
-    <div class="ai-voice-wrap">
-
-      <!-- API Key -->
-      <div style="width:100%;background:rgba(26,58,42,0.6);border:1px solid rgba(201,168,76,0.3);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;">
-        <div style="font-size:0.68rem;letter-spacing:2px;text-transform:uppercase;color:rgba(210,195,155,0.8);">🔑 Anthropic API Key</div>
-        <div class="ai-api-row">
-          <input type="password" class="ai-api-input" id="aiApiKey" placeholder="sk-ant-..." />
-          <button class="ai-api-btn" onclick="aiSalvaKey()">Salva</button>
-        </div>
-        <div class="ai-api-status" id="aiApiStatus">Inserisci la tua API key per iniziare</div>
-      </div>
-
-      <!-- Microfono -->
-      <div class="ai-mic-ring">
-        <button class="ai-mic-btn" id="aiMicBtn" onclick="aiToggleListening()">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="9" y="2" width="6" height="11" rx="3"/>
-            <path d="M5 10a7 7 0 0 0 14 0"/>
-            <line x1="12" y1="19" x2="12" y2="22"/>
-            <line x1="9" y1="22" x2="15" y2="22"/>
-          </svg>
-          <div class="ai-mic-spinner"></div>
-        </button>
-      </div>
-      <div class="ai-mic-label" id="aiMicLabel">Tocca per parlare</div>
-      <div class="ai-waves" id="aiWaves">
-        <div class="ai-wave-bar"></div><div class="ai-wave-bar"></div>
-        <div class="ai-wave-bar"></div><div class="ai-wave-bar"></div>
-        <div class="ai-wave-bar"></div>
-      </div>
-
-      <!-- Trascrizione -->
-      <div class="ai-transcript" id="aiTranscript">
-        <span style="font-size:1.1rem;opacity:0.6">🎙️</span>
-        <div class="ai-transcript-text placeholder" id="aiTranscriptText">La tua domanda apparirà qui...</div>
-      </div>
-
-      <!-- Risposta -->
-      <div class="ai-response">
-        <div class="ai-response-label">Risposta</div>
-        <div class="ai-response-text placeholder" id="aiResponseText">Chiedi qualcosa sulla tua casa, le scadenze, i compleanni...</div>
-      </div>
-
-      <!-- Token -->
-      <div class="ai-token-box">
-        <div class="ai-token-header">
-          <div class="ai-token-title">📊 Consumo Token</div>
-          <button class="ai-token-reset" onclick="aiResetToken()">Reset</button>
-        </div>
-        <div class="ai-token-stats">
-          <div class="ai-token-stat"><div class="ai-token-val" id="aiTokTotal">0</div><div class="ai-token-lbl">Totale</div></div>
-          <div class="ai-token-stat"><div class="ai-token-val" id="aiTokSessione">0</div><div class="ai-token-lbl">Sessione</div></div>
-          <div class="ai-token-stat"><div class="ai-token-val" id="aiTokDomande">0</div><div class="ai-token-lbl">Domande</div></div>
-        </div>
-        <div class="ai-token-bar-wrap"><div class="ai-token-bar" id="aiTokenBar"></div></div>
-        <div class="ai-token-cost" id="aiTokCosto">~$0.0000</div>
-        <div class="ai-limit-row">
-          <label>Limite $</label>
-          <input class="ai-limit-input" type="number" id="aiLimitInput" min="0.01" step="0.5" placeholder="5.00" />
-          <button class="ai-token-reset" onclick="aiSaveLimit()">OK</button>
-        </div>
-        <div class="ai-limit-bar-wrap"><div class="ai-limit-bar" id="aiLimitBar"></div></div>
-        <div class="ai-limit-pct" id="aiLimitPct">Nessun limite impostato</div>
-      </div>
-
-      <!-- Errore -->
-      <div class="ai-error" id="aiError"></div>
-
-
-
-    </div>
-  </div>
 
 </main>
 
@@ -1599,10 +1208,7 @@
     <span class="nav-icon">✨</span>
     <span class="nav-label">Extra</span>
   </button>
-  <button class="nav-btn" onclick="showTab('ai', this)">
-    <span class="nav-icon">🤖</span>
-    <span class="nav-label">AI</span>
-  </button>
+
 </nav>
 
 <script>
@@ -1945,6 +1551,49 @@ function formatDate(dateStr) {
   return d.toLocaleDateString('it-IT', { day: '2-digit', month: 'long', year: 'numeric' });
 }
 
+
+function renderStorico() {
+  const container = document.getElementById('storicoScadenze');
+  if (!container) return;
+  const storico = JSON.parse(localStorage.getItem('mc_flag_storico') || '[]');
+  if (!storico.length) {
+    container.innerHTML = '<div style="padding:12px;color:var(--ink-light);font-size:0.82rem;text-align:center">Nessun completamento registrato ancora.</div>';
+    return;
+  }
+  // Raggruppa per data, più recenti prima
+  const grouped = {};
+  storico.slice().reverse().forEach(function(r) {
+    if (!grouped[r.data]) grouped[r.data] = [];
+    grouped[r.data].push(r);
+  });
+  const mesiNomi = ['','Gen','Feb','Mar','Apr','Mag','Giu','Lug','Ago','Set','Ott','Nov','Dic'];
+  let html = '';
+  Object.keys(grouped).sort().reverse().slice(0, 30).forEach(function(data) {
+    const parts = data.split('-');
+    const dataLabel = parts[2] + ' ' + mesiNomi[parseInt(parts[1])] + ' ' + parts[0];
+    html += '<div style="margin-bottom:12px">';
+    html += '<div style="font-size:0.7rem;font-weight:700;color:var(--ink-light);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px">📅 ' + dataLabel + '</div>';
+    grouped[data].forEach(function(r) {
+      html += '<div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--warm-white);border:1px solid var(--border);border-radius:10px;margin-bottom:5px">'
+        + '<span style="color:#4A9B6F;font-size:0.9rem">✓</span>'
+        + '<span style="font-size:0.85rem;color:var(--ink);flex:1">' + r.title + '</span>'
+        + '</div>';
+    });
+    html += '</div>';
+  });
+  html += '<button onclick="cancellaStorico()" style="width:100%;padding:10px;background:var(--warm-white);border:1px dashed var(--border);border-radius:10px;color:var(--ink-light);font-size:0.8rem;cursor:pointer;margin-top:4px">🗑️ Cancella storico</button>';
+  container.innerHTML = html;
+}
+
+function cancellaStorico() {
+  if (confirm('Cancellare tutto lo storico completamenti?')) {
+    localStorage.removeItem('mc_flag_storico');
+    localStorage.removeItem('mc_flag_oggi');
+    renderStorico();
+    renderOggi();
+  }
+}
+
 function renderScadenze() {
   const grid = document.getElementById('scadenzeGrid');
   grid.innerHTML = '';
@@ -1967,70 +1616,27 @@ function renderScadenze() {
 
   // Scadenze personali
   const custom = JSON.parse(localStorage.getItem('mc_scadenze') || '[]');
-  const mesiNomi = ['','Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'];
   custom.forEach((s, idx) => {
+    const sem = getSemaforo(s.date);
+    const label = getSemaforoLabel(s.date);
     const card = document.createElement('div');
     card.className = 'scadenza-card gold';
-
-    if (!s.tipo || s.tipo === 'puntuale') {
-      const sem = getSemaforo(s.date);
-      const label = getSemaforoLabel(s.date);
-      card.innerHTML = `
-        <div class="sc-header">
-          <div class="sc-title">${s.title}</div>
-          <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
-            <div class="sc-semaforo ${sem}" title="${label}"></div>
-            <button class="sc-delete" onclick="deleteScadenza(${idx})">✕</button>
-          </div>
+    card.innerHTML = `
+      <div class="sc-header">
+        <div class="sc-title">${s.title}</div>
+        <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
+          <div class="sc-semaforo ${sem}" title="${label}"></div>
+          <button class="sc-delete" onclick="deleteScadenza(${idx})">✕</button>
         </div>
-        <div class="sc-date">📅 <strong>${formatDate(s.date)}</strong></div>
-        ${label ? `<div class="sc-note" style="color:${sem==='semaforo-red'?'#D94F4F':sem==='semaforo-yellow'?'#8C6E20':'#3D6B4F'};font-weight:500">${label}</div>` : ''}
-        ${s.note ? `<div class="sc-note">${s.note}</div>` : ''}
-        <div class="sc-tags"><span class="sc-tag">Personale</span></div>
-      `;
-    } else if (s.tipo === 'mensile') {
-      const now = new Date();
-      const giornoMese = now.getDate();
-      const giorniAl = s.giorno >= giornoMese ? s.giorno - giornoMese : (new Date(now.getFullYear(), now.getMonth()+1, s.giorno).getDate() + (30 - giornoMese));
-      const prossima = s.giorno >= giornoMese ? 'il ' + s.giorno + ' di questo mese' : 'il ' + s.giorno + ' del mese prossimo';
-      const semColor = giorniAl <= 3 ? 'semaforo-red' : giorniAl <= 7 ? 'semaforo-yellow' : 'semaforo-green';
-      card.innerHTML = `
-        <div class="sc-header">
-          <div class="sc-title">${s.title}</div>
-          <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
-            <div class="sc-semaforo ${semColor}"></div>
-            <button class="sc-delete" onclick="deleteScadenza(${idx})">✕</button>
-          </div>
-        </div>
-        <div class="sc-date">🔁 Ogni mese il giorno <strong>${s.giorno}</strong></div>
-        <div class="sc-note" style="color:#8C6E20;font-weight:500">Prossima scadenza: ${prossima}</div>
-        ${s.note ? `<div class="sc-note">${s.note}</div>` : ''}
-        <div class="sc-tags"><span class="sc-tag">Mensile</span><span class="sc-tag">Personale</span></div>
-      `;
-    } else if (s.tipo === 'annuale') {
-      const now = new Date();
-      let target = new Date(now.getFullYear(), s.mese - 1, s.giorno);
-      if (target < now) target = new Date(now.getFullYear() + 1, s.mese - 1, s.giorno);
-      const days = Math.round((target - now) / 86400000);
-      const semColor = days <= 7 ? 'semaforo-red' : days <= 15 ? 'semaforo-yellow' : 'semaforo-green';
-      const lbl = days === 0 ? 'Scade oggi!' : days === 1 ? 'Domani!' : 'Tra ' + days + ' giorni';
-      card.innerHTML = `
-        <div class="sc-header">
-          <div class="sc-title">${s.title}</div>
-          <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
-            <div class="sc-semaforo ${semColor}"></div>
-            <button class="sc-delete" onclick="deleteScadenza(${idx})">✕</button>
-          </div>
-        </div>
-        <div class="sc-date">📆 Ogni anno il <strong>${s.giorno} ${mesiNomi[s.mese]}</strong></div>
-        <div class="sc-note" style="color:${semColor==='semaforo-red'?'#D94F4F':semColor==='semaforo-yellow'?'#8C6E20':'#3D6B4F'};font-weight:500">${lbl}</div>
-        ${s.note ? `<div class="sc-note">${s.note}</div>` : ''}
-        <div class="sc-tags"><span class="sc-tag">Annuale</span><span class="sc-tag">Personale</span></div>
-      `;
-    }
-
+      </div>
+      <div class="sc-date">📅 <strong>${formatDate(s.date)}</strong></div>
+      ${label ? `<div class="sc-note" style="color:${sem==='semaforo-red'?'#D94F4F':sem==='semaforo-yellow'?'#8C6E20':'#3D6B4F'};font-weight:500">${label}</div>` : ''}
+      ${s.note ? `<div class="sc-note">${s.note}</div>` : ''}
+      <div class="sc-tags"><span class="sc-tag">Personale</span></div>
+    `;
     grid.appendChild(card);
   });
+  renderStorico();
 }
 
 function toggleAddScadenza() {
@@ -2038,48 +1644,22 @@ function toggleAddScadenza() {
   form.classList.toggle('open');
 }
 
-function aggiornaCampiScadenza() {
-  const tipo = document.getElementById('sc-new-tipo').value;
-  document.getElementById('sc-campo-data').style.display = tipo === 'puntuale' ? '' : 'none';
-  document.getElementById('sc-campo-giorno').style.display = tipo === 'mensile' ? '' : 'none';
-  document.getElementById('sc-campo-annuale').style.display = tipo === 'annuale' ? '' : 'none';
-}
-
 function saveNewScadenza() {
   const title = document.getElementById('sc-new-title').value.trim();
-  const tipo = document.getElementById('sc-new-tipo').value;
+  const date = document.getElementById('sc-new-date').value;
   const note = document.getElementById('sc-new-note').value.trim();
-  if (!title) { alert('Inserisci il titolo!'); return; }
-
+  if (!title || !date) { alert('Inserisci titolo e data!'); return; }
   const custom = JSON.parse(localStorage.getItem('mc_scadenze') || '[]');
-
-  if (tipo === 'puntuale') {
-    const date = document.getElementById('sc-new-date').value;
-    if (!date) { alert('Inserisci la data!'); return; }
-    custom.push({ title, date, note, tipo: 'puntuale' });
-    custom.sort((a,b) => new Date(a.date) - new Date(b.date));
-  } else if (tipo === 'mensile') {
-    const giorno = parseInt(document.getElementById('sc-new-giorno').value);
-    if (!giorno || giorno < 1 || giorno > 31) { alert('Inserisci un giorno valido (1-31)!'); return; }
-    custom.push({ title, note, tipo: 'mensile', giorno });
-  } else if (tipo === 'annuale') {
-    const giorno = parseInt(document.getElementById('sc-new-giorno-ann').value);
-    const mese = parseInt(document.getElementById('sc-new-mese-ann').value);
-    if (!giorno || !mese) { alert('Inserisci giorno e mese!'); return; }
-    custom.push({ title, note, tipo: 'annuale', giorno, mese });
-  }
-
+  custom.push({ title, date, note });
+  // Sort by date
+  custom.sort((a,b) => new Date(a.date) - new Date(b.date));
   localStorage.setItem('mc_scadenze', JSON.stringify(custom));
   document.getElementById('sc-new-title').value = '';
   document.getElementById('sc-new-date').value = '';
   document.getElementById('sc-new-note').value = '';
-  document.getElementById('sc-new-giorno').value = '';
-  document.getElementById('sc-new-giorno-ann').value = '';
-  document.getElementById('sc-new-mese-ann').value = '';
-  document.getElementById('sc-new-tipo').value = 'puntuale';
-  aggiornaCampiScadenza();
   toggleAddScadenza();
   renderScadenze();
+  renderStorico();
 }
 
 function deleteScadenza(idx) {
@@ -2286,19 +1866,39 @@ function renderOggi() {
 
   let items = '';
 
+  const oggiFlag = JSON.parse(localStorage.getItem('mc_flag_oggi') || '{}');
+  const oggiDateStr = now.toISOString().split('T')[0];
+
+  function btnFatto(id, icon, title, sublabel, extra) {
+    const key = id + '_' + oggiDateStr;
+    const fatto = oggiFlag[key];
+    const opacity = fatto ? 'opacity:0.45;' : '';
+    const strike = fatto ? 'text-decoration:line-through;' : '';
+    const safeKey = key.replace(/"/g, '&quot;');
+    const safeId = id.replace(/"/g, '&quot;');
+    const safeTitle = title.replace(/"/g, '&quot;');
+    const btn = fatto
+      ? '<span style="background:rgba(74,155,111,0.3);color:#4A9B6F;padding:4px 11px;border-radius:20px;font-size:0.72rem;flex-shrink:0">✓ Fatto</span>'
+      : '<button onclick="segnaFattoOggi(&quot;' + safeKey + '&quot;,&quot;' + safeId + '&quot;,&quot;' + safeTitle + '&quot;)" style="background:rgba(255,255,255,0.12);border:none;color:var(--cream);padding:4px 11px;border-radius:20px;font-size:0.72rem;cursor:pointer;flex-shrink:0">✓ Fatto</button>';
+    return '<div class="oggi-item" style="' + opacity + '"><div class="oggi-item-icon">' + icon + '</div><div class="oggi-label" style="' + strike + '"><div>' + title + '</div><div class="oggi-sublabel">' + sublabel + (extra||'') + '</div></div>' + btn + '</div>';
+  }
+
   // --- SPAZZATURA ---
   if (raccoltaOggi.length > 0) {
-    items += '<div class="oggi-item"><div class="oggi-item-icon">🗑️</div><div class="oggi-label"><div>Metti fuori: ' + raccoltaOggi.join(', ') + '</div><div class="oggi-sublabel">Raccolta di oggi</div></div></div>';
+    items += btnFatto('spazzatura', '🗑️', 'Metti fuori: ' + raccoltaOggi.join(', '), 'Raccolta di oggi');
   }
 
   // --- LENZUOLA domenica ---
   if (oggi === 0) {
-    items += '<div class="oggi-item"><div class="oggi-item-icon">🛏️</div><div class="oggi-label"><div>Cambiare le lenzuola</div><div class="oggi-sublabel">Ogni domenica</div></div></div>';
+    items += btnFatto('lenzuola', '🛏️', 'Cambiare le lenzuola', 'Ogni domenica');
   }
 
   // --- PIANTE ---
   if (pianteNeeded) {
-    items += '<div class="oggi-item"><div class="oggi-item-icon">🌿</div><div class="oggi-label"><div>Annaffia le piante</div><div class="oggi-sublabel">' + (daysSince === 0 ? 'Ancora da annaffiare oggi' : 'Ultima volta ' + daysSince + 'g fa') + '</div></div><button onclick="segnaAnnaffiato()" style="background:rgba(255,255,255,0.12);border:none;color:var(--cream);padding:5px 12px;border-radius:20px;font-size:0.75rem;cursor:pointer;">✓ Fatto</button></div>';
+    const key = 'piante_' + oggiDateStr;
+    const fatto = oggiFlag[key];
+    const sublbl = fatto ? 'Annaffiate oggi ✓' : (daysSince === 0 ? 'Ancora da annaffiare oggi' : 'Ultima volta ' + daysSince + 'g fa');
+    items += btnFatto('piante', '🌿', 'Annaffia le piante', sublbl);
   }
 
   // --- PROMEMORIA RICORRENTI ---
@@ -2318,19 +1918,17 @@ function renderOggi() {
   });
 
   // --- SCADENZE MENSILI FISSE entro 15gg ---
-  // Bolletta luce + condominio il 15
   const giorniAl15 = 15 - giornomese;
   if (giorniAl15 >= 0 && giorniAl15 <= 15) {
     const lbl15 = giorniAl15 === 0 ? 'Scade oggi!' : 'Scade tra ' + giorniAl15 + ' giorni (il 15)';
-    items += '<div class="oggi-item"><div class="oggi-item-icon">💡</div><div class="oggi-label"><div>Bolletta Luce</div><div class="oggi-sublabel">' + lbl15 + '</div></div></div>';
-    items += '<div class="oggi-item"><div class="oggi-item-icon">🏢</div><div class="oggi-label"><div>Pagamento Condominio</div><div class="oggi-sublabel">' + lbl15 + '</div></div></div>';
+    items += btnFatto('bolletta_luce_' + now.getMonth(), '💡', 'Bolletta Luce', lbl15);
+    items += btnFatto('condominio_' + now.getMonth(), '🏢', 'Pagamento Condominio', lbl15);
   }
 
-  // Mutuo il 25
   const giorniAl25 = 25 - giornomese;
   if (giorniAl25 >= 0 && giorniAl25 <= 15) {
     const lbl25 = giorniAl25 === 0 ? 'Scade oggi!' : 'Scade tra ' + giorniAl25 + ' giorni (il 25)';
-    items += '<div class="oggi-item"><div class="oggi-item-icon">🏠</div><div class="oggi-label"><div>Pagamento Mutuo</div><div class="oggi-sublabel">' + lbl25 + '</div></div></div>';
+    items += btnFatto('mutuo_' + now.getMonth(), '🏠', 'Pagamento Mutuo', lbl25);
   }
 
   // --- SCADENZE PERSONALI ---
@@ -2342,14 +1940,13 @@ function renderOggi() {
       const days = Math.round((d - now) / (1000*60*60*24));
       if (days >= 0 && days <= 15) {
         const lbl = days === 0 ? 'Scade oggi!' : 'Scade tra ' + days + ' giorni';
-        items += '<div class="oggi-item"><div class="oggi-item-icon">⏰</div><div class="oggi-label"><div>' + s.title + '</div><div class="oggi-sublabel">' + lbl + '</div></div></div>';
+        items += btnFatto('scad_' + s.title + '_' + s.date, '⏰', s.title, lbl);
       }
     } else if (s.tipo === 'mensile') {
-      const giornoMese = now.getDate();
-      const giorniAl = s.giorno >= giornoMese ? s.giorno - giornoMese : -1;
+      const giorniAl = s.giorno >= giornomese ? s.giorno - giornomese : -1;
       if (giorniAl >= 0 && giorniAl <= 7) {
         const lbl = giorniAl === 0 ? 'Scade oggi!' : 'Scade tra ' + giorniAl + ' giorni (il ' + s.giorno + ')';
-        items += '<div class="oggi-item"><div class="oggi-item-icon">🔁</div><div class="oggi-label"><div>' + s.title + '</div><div class="oggi-sublabel">' + lbl + '</div></div></div>';
+        items += btnFatto('scad_mens_' + s.title + '_' + now.getMonth(), '🔁', s.title, lbl);
       }
     } else if (s.tipo === 'annuale') {
       let target = new Date(now.getFullYear(), s.mese - 1, s.giorno);
@@ -2357,12 +1954,12 @@ function renderOggi() {
       const days = Math.round((target - now) / 86400000);
       if (days >= 0 && days <= 15) {
         const lbl = days === 0 ? 'Scade oggi!' : 'Scade tra ' + days + ' giorni (' + s.giorno + ' ' + mesiNomiOggi[s.mese] + ')';
-        items += '<div class="oggi-item"><div class="oggi-item-icon">📆</div><div class="oggi-label"><div>' + s.title + '</div><div class="oggi-sublabel">' + lbl + '</div></div></div>';
+        items += btnFatto('scad_ann_' + s.title + '_' + now.getFullYear(), '📆', s.title, lbl);
       }
     }
   });
 
-  // --- SCADENZE ANNUALI — avviso nei primi 15 giorni del mese di scadenza ---
+  // --- SCADENZE ANNUALI FISSE ---
   const scadenzeAnnuali = [
     { title: 'Assicurazione Auto', icon: '🚗', month: 12, day: 15 },
     { title: 'Bollo Auto', icon: '🚗', month: 1, day: 31 },
@@ -2383,7 +1980,7 @@ function renderOggi() {
     const days = Math.round((scad - now) / (1000*60*60*24));
     if (days >= 0 && days <= 15) {
       const lbl = days === 0 ? 'Scade oggi!' : 'Scade tra ' + days + ' giorni';
-      items += '<div class="oggi-item"><div class="oggi-item-icon">' + s.icon + '</div><div class="oggi-label"><div>' + s.title + '</div><div class="oggi-sublabel">' + lbl + '</div></div></div>';
+      items += btnFatto('ann_' + s.title + '_' + now.getFullYear(), s.icon, s.title, lbl);
     }
   });
 
@@ -2397,23 +1994,23 @@ function renderOggi() {
     const days = Math.round((scad - now) / (1000*60*60*24));
     if (days >= 0 && days <= 15) {
       const lbl = days === 0 ? 'Scade oggi!' : 'Scade tra ' + days + ' giorni';
-      items += '<div class="oggi-item"><div class="oggi-item-icon">🛡️</div><div class="oggi-label"><div>Garanzia: ' + g.nome + '</div><div class="oggi-sublabel">' + lbl + '</div></div></div>';
+      items += btnFatto('gar_' + g.nome, '🛡️', 'Garanzia: ' + g.nome, lbl);
     }
   });
 
-  // --- FARMACI — promemoria ogni 6 mesi (aprile e ottobre) per 15 giorni ---
-  const meseCorrente = now.getMonth() + 1; // 1-12
+  // --- FARMACI ---
+  const meseCorrente = now.getMonth() + 1;
   const giornoCorrente = now.getDate();
   if ((meseCorrente === 4 || meseCorrente === 10) && giornoCorrente <= 15) {
     const meseNome = meseCorrente === 4 ? 'aprile' : 'ottobre';
-    items += '<div class="oggi-item"><div class="oggi-item-icon">💊</div><div class="oggi-label"><div>Controlla scadenze medicinali</div><div class="oggi-sublabel">Promemoria semestrale di ' + meseNome + ' — armadio farmaci</div></div></div>';
+    items += btnFatto('farmaci_' + meseCorrente, '💊', 'Controlla scadenze medicinali', 'Promemoria semestrale di ' + meseNome);
   }
 
   // --- COMPLEANNI entro 15gg ---
   const tuttiCb = getAllCompleanni();
   tuttiCb.filter(c => getDaysToCompleanno(c.giorno, c.mese) <= 15).forEach(function(c) {
     const days = getDaysToCompleanno(c.giorno, c.mese);
-    const label = days === 0 ? '🎉 Oggi!' : days === 1 ? 'Domani!' : 'Tra ' + days + ' giorni';
+    const label = days === 0 ? 'Oggi!' : days === 1 ? 'Domani!' : 'Tra ' + days + ' giorni';
     items += '<div class="oggi-item"><div class="oggi-item-icon">' + c.tipo + '</div><div class="oggi-label"><div>' + c.nome + '</div><div class="oggi-sublabel">' + label + '</div></div></div>';
   });
 
@@ -2451,7 +2048,6 @@ function salvaPromemoria() {
   document.getElementById('prom-emoji').value = '';
   toggleForm('form-nuovo-promemoria');
   renderPromemoria();
-  aiInitUI();
   renderOggi();
 }
 
@@ -2459,7 +2055,6 @@ function eliminaPromemoria(id) {
   const lista = JSON.parse(localStorage.getItem('mc_promemoria') || '[]').filter(p => p.id !== id);
   localStorage.setItem('mc_promemoria', JSON.stringify(lista));
   renderPromemoria();
-  aiInitUI();
   renderOggi();
 }
 
@@ -2470,7 +2065,6 @@ function segnaPromemoriaFatto(id) {
   localStorage.setItem('mc_prom_fatti', JSON.stringify(fatti));
   renderOggi();
   renderPromemoria();
-  aiInitUI();
 }
 
 function isPromemoriaAttivo(p) {
@@ -2514,6 +2108,23 @@ function renderPromemoria() {
     </div>`;
   }).join('');
   container.innerHTML = `<div style="background:var(--ink);border-radius:14px;padding:8px 16px;margin-bottom:10px">${html}</div>`;
+}
+
+
+function segnaFattoOggi(key, id, title) {
+  const flags = JSON.parse(localStorage.getItem('mc_flag_oggi') || '{}');
+  const storico = JSON.parse(localStorage.getItem('mc_flag_storico') || '[]');
+  const oggi = new Date().toISOString().split('T')[0];
+  flags[key] = true;
+  // Salva nello storico
+  storico.push({ key, id, title, data: oggi, ts: Date.now() });
+  // Mantieni solo ultimi 200 record
+  if (storico.length > 200) storico.splice(0, storico.length - 200);
+  localStorage.setItem('mc_flag_oggi', JSON.stringify(flags));
+  localStorage.setItem('mc_flag_storico', JSON.stringify(storico));
+  // Aggiorna anche piante se è quella
+  if (id === 'piante') localStorage.setItem('mc_piante', Date.now().toString());
+  renderOggi();
 }
 
 function segnaAnnaffiato() {
@@ -2580,7 +2191,6 @@ function addQuickTask() {
   toggleForm('form-quick-add');
   renderQuickWeekly();
   renderPromemoria();
-  aiInitUI();
 }
 
 function renderQuickWeekly() {
@@ -2604,7 +2214,6 @@ function removeQuickTask(id) {
   localStorage.setItem('mc_quick_tasks', JSON.stringify(tasks));
   renderQuickWeekly();
   renderPromemoria();
-  aiInitUI();
 }
 
 function renderQuickScadenze() {
@@ -2779,275 +2388,6 @@ function startCountdown() {
   setInterval(update, 1000);
 }
 
-
-// ===================== AI VOICE ASSISTANT =====================
-let aiKey = localStorage.getItem('mc_ai_key') || '';
-let aiRecognition = null;
-let aiState = 'idle';
-let aiSynth = window.speechSynthesis;
-let aiTokTotale = parseInt(localStorage.getItem('mc_ai_tok_tot') || '0');
-let aiTokSessione = 0;
-let aiDomande = parseInt(localStorage.getItem('mc_ai_tok_dom') || '0');
-let aiCosto = parseFloat(localStorage.getItem('mc_ai_tok_costo') || '0');
-let aiLimite = parseFloat(localStorage.getItem('mc_ai_limite') || '0');
-const AI_COSTO_IN = 0.000003;
-const AI_COSTO_OUT = 0.000015;
-
-function aiInitUI() {
-  if (aiKey) {
-    document.getElementById('aiApiKey').value = aiKey;
-    document.getElementById('aiApiStatus').textContent = '✓ API key salvata';
-    document.getElementById('aiApiStatus').className = 'ai-api-status ok';
-  }
-  document.getElementById('aiTokTotal').textContent = aiTokTotale.toLocaleString('it');
-  document.getElementById('aiTokDomande').textContent = aiDomande;
-  document.getElementById('aiTokCosto').textContent = '~$' + aiCosto.toFixed(4);
-  if (aiLimite > 0) document.getElementById('aiLimitInput').value = aiLimite.toFixed(2);
-  aiUpdateLimitBar();
-}
-
-function aiSalvaKey() {
-  aiKey = document.getElementById('aiApiKey').value.trim();
-  localStorage.setItem('mc_ai_key', aiKey);
-  document.getElementById('aiApiStatus').textContent = '✓ API key salvata';
-  document.getElementById('aiApiStatus').className = 'ai-api-status ok';
-}
-
-function aiGetContesto() {
-  const now = new Date();
-  const giorni = ['domenica','lunedì','martedì','mercoledì','giovedì','venerdì','sabato'];
-  const mesi = ['gennaio','febbraio','marzo','aprile','maggio','giugno','luglio','agosto','settembre','ottobre','novembre','dicembre'];
-  const dataStr = now.getDate() + ' ' + mesi[now.getMonth()] + ' ' + now.getFullYear();
-  const dowStr = giorni[now.getDay()];
-  const giorno = now.getDate();
-  const mese = now.getMonth() + 1;
-
-  // Differenziata
-  const diffMap = {0:'Nessuna',1:'🟡 Plastica',2:'📄 Carta',3:'🟡 Plastica',4:'🟤 Umido',5:'⚫ Indifferenziata',6:'🟤 Umido e 🟢 Vetro'};
-  const raccoltaOggi = diffMap[now.getDay()] || '—';
-
-  // Compleanni prossimi 30gg
-  const cbProssimi = getAllCompleanni().filter(c => {
-    const d = getDaysToCompleanno(c.giorno, c.mese);
-    return d >= 0 && d <= 30;
-  }).map(c => c.nome + ' tra ' + getDaysToCompleanno(c.giorno, c.mese) + ' giorni').join(', ') || 'nessuno';
-
-  // Scadenze custom
-  const scadCustom = JSON.parse(localStorage.getItem('mc_scadenze') || '[]');
-  const scadProssime = scadCustom.filter(s => {
-    const d = new Date(s.date); d.setHours(0,0,0,0);
-    return Math.round((d - now) / 86400000) >= 0 && Math.round((d - now) / 86400000) <= 30;
-  }).map(s => s.title + ' (' + new Date(s.date).toLocaleDateString('it-IT') + ')').join(', ') || 'nessuna';
-
-  // Spesa
-  const spesa = JSON.parse(localStorage.getItem('mc_spesa') || '[]').filter(s => !s.fatto).map(s => s.testo).join(', ') || 'vuota';
-
-  // Farmaci
-  const farmaci = JSON.parse(localStorage.getItem('mc_farmaci') || '[]').map(f => f.nome).join(', ') || 'nessuno';
-
-  // Piante
-  const lastWatered = parseInt(localStorage.getItem('mc_piante') || '0');
-  const daysSince = Math.floor((Date.now() - lastWatered) / 86400000);
-  const pianteStatus = daysSince >= 1 ? 'VA ANNAFFIATA! Ultima volta ' + daysSince + ' giorni fa' : 'annaffiata oggi';
-
-  // Tutti i compleanni con data precisa
-  const tuttiCb = getAllCompleanni().map(c => c.nome + ': ' + c.giorno + '/' + c.mese).join(', ') || 'nessuno';
-
-  return `Sei l'assistente vocale di MyCasale, app familiare italiana.
-
-REGOLE ASSOLUTE:
-1. Rispondi SOLO in italiano.
-2. NON usare MAI markdown: niente asterischi, grassetto, corsivo, trattini, elenchi puntati. Solo testo semplice.
-3. NON inventare MAI dati. Se un informazione non e nei dati sotto, di esattamente: non ho questa informazione.
-4. Quando ti chiedono di una persona specifica (es. compleanno di Sofia), cerca quel nome ESATTO nella lista e riporta solo quella data. Non dare informazioni di altre persone.
-5. Risposte brevissime e dirette. Max 2-3 frasi.
-
-=== DATI CASA ===
-DATA OGGI: \${dataStr} (\${dowStr})
-RACCOLTA RIFIUTI: \${raccoltaOggi}
-PIANTE: \${pianteStatus}
-SCADENZE FISSE: bolletta luce e condominio il 15, mutuo il 25
-SCADENZE PROSSIME: \${scadProssime}
-SPESA: \${spesa}
-FARMACI: \${farmaci}
-VIAGGIO: Roma maggio 2026 (Internazionali BNL)
-
-LISTA COMPLEANNI (nome: giorno/mese):
-\${tuttiCb}
-
-COMPLEANNI ENTRO 30 GIORNI: \${cbProssimi}
-=== FINE DATI ===`;
-}
-
-function aiToggleListening() {
-  if (!aiKey) { aiShowError('Inserisci prima la tua API key!'); return; }
-  if (aiState === 'thinking' || aiState === 'speaking') return;
-  if (aiState === 'listening') { aiStopListening(); } else { aiStartListening(); }
-}
-
-function aiStartListening() {
-  if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-    aiShowError('Il tuo browser non supporta il riconoscimento vocale. Usa Chrome.');
-    return;
-  }
-  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  aiRecognition = new SR();
-  aiRecognition.lang = 'it-IT';
-  aiRecognition.interimResults = true;
-  aiRecognition.onstart = () => aiSetState('listening');
-  aiRecognition.onresult = (e) => {
-    const t = Array.from(e.results).map(r => r[0].transcript).join('');
-    aiSetTranscript(t, !e.results[e.results.length-1].isFinal);
-    if (e.results[e.results.length-1].isFinal) { aiRecognition.stop(); aiAskAI(t); }
-  };
-  aiRecognition.onerror = (e) => { aiSetState('idle'); aiShowError('Errore microfono: ' + e.error); };
-  aiRecognition.onend = () => { if (aiState === 'listening') aiSetState('idle'); };
-  aiRecognition.start();
-}
-
-function aiStopListening() {
-  if (aiRecognition) aiRecognition.stop();
-  aiSetState('idle');
-}
-
-async function aiAskAI(domanda) {
-  if (!domanda.trim()) { aiSetState('idle'); return; }
-  if (aiLimite > 0 && aiCosto >= aiLimite) {
-    aiShowError('⚠️ Limite di spesa raggiunto. Reimposta il limite per continuare.');
-    aiSetState('idle'); return;
-  }
-  aiSetState('thinking');
-  try {
-    const resp = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'x-api-key': aiKey, 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-5',
-        max_tokens: 400,
-        system: aiGetContesto(),
-        messages: [{ role: 'user', content: domanda }]
-      })
-    });
-    if (!resp.ok) { const e = await resp.json(); throw new Error(e.error?.message || 'Errore API'); }
-    const data = await resp.json();
-    const risposta = data.content[0].text;
-    aiUpdateToken(data.usage?.input_tokens || 0, data.usage?.output_tokens || 0);
-    aiSetResponse(risposta);
-    aiSpeak(risposta);
-  } catch(e) {
-    aiSetState('idle');
-    aiShowError('Errore: ' + e.message);
-  }
-}
-
-function aiSpeak(testo) {
-  if (!window.speechSynthesis) { aiSetState('idle'); return; }
-  aiSynth.cancel();
-  const testoVoce = testo.replace(/[\u{1F300}-\u{1FAFF}]/gu, '').replace(/[•·]/g,'').trim();
-  const utt = new SpeechSynthesisUtterance(testoVoce);
-  utt.lang = 'it-IT'; utt.rate = 0.95; utt.pitch = 1;
-  const voci = aiSynth.getVoices();
-  const voceIT = voci.find(v => v.lang.startsWith('it'));
-  if (voceIT) utt.voice = voceIT;
-  utt.onstart = () => aiSetState('speaking');
-  utt.onend = () => aiSetState('idle');
-  utt.onerror = () => aiSetState('idle');
-  aiSynth.speak(utt);
-}
-
-function aiChip(el) {
-  if (!aiKey) { aiShowError('Inserisci prima la tua API key!'); return; }
-  if (aiState !== 'idle') return;
-  aiSetTranscript(el.textContent, false);
-  aiAskAI(el.textContent);
-}
-
-function aiSetState(state) {
-  aiState = state;
-  const btn = document.getElementById('aiMicBtn');
-  const lbl = document.getElementById('aiMicLabel');
-  const waves = document.getElementById('aiWaves');
-  btn.className = 'ai-mic-btn' + (state !== 'idle' ? ' ' + state : '');
-  const labels = { idle:'Tocca per parlare', listening:'Sto ascoltando...', thinking:'Sto pensando...', speaking:'Risposta in corso...' };
-  lbl.textContent = labels[state];
-  waves.className = 'ai-waves' + (state === 'speaking' ? ' active' : '');
-}
-
-function aiSetTranscript(testo, interim) {
-  const box = document.getElementById('aiTranscript');
-  const el = document.getElementById('aiTranscriptText');
-  el.textContent = testo;
-  el.className = 'ai-transcript-text' + (interim ? ' interim' : '');
-  box.className = 'ai-transcript' + (testo ? ' active' : '');
-}
-
-function aiSetResponse(testo) {
-  const el = document.getElementById('aiResponseText');
-  el.textContent = testo;
-  el.className = 'ai-response-text';
-}
-
-function aiShowError(msg) {
-  const el = document.getElementById('aiError');
-  el.textContent = msg; el.className = 'ai-error visible';
-  setTimeout(() => el.className = 'ai-error', 5000);
-}
-
-function aiUpdateToken(inp, out) {
-  aiTokSessione += inp + out;
-  aiTokTotale += inp + out;
-  aiDomande += 1;
-  aiCosto += inp * AI_COSTO_IN + out * AI_COSTO_OUT;
-  localStorage.setItem('mc_ai_tok_tot', aiTokTotale);
-  localStorage.setItem('mc_ai_tok_dom', aiDomande);
-  localStorage.setItem('mc_ai_tok_costo', aiCosto);
-  document.getElementById('aiTokTotal').textContent = aiTokTotale.toLocaleString('it');
-  document.getElementById('aiTokSessione').textContent = aiTokSessione.toLocaleString('it');
-  document.getElementById('aiTokDomande').textContent = aiDomande;
-  document.getElementById('aiTokCosto').textContent = '~$' + aiCosto.toFixed(4);
-  const pct = Math.min((aiTokSessione / 10000) * 100, 100);
-  document.getElementById('aiTokenBar').style.width = pct + '%';
-  aiUpdateLimitBar();
-}
-
-function aiResetToken() {
-  aiTokTotale = 0; aiTokSessione = 0; aiDomande = 0; aiCosto = 0;
-  localStorage.removeItem('mc_ai_tok_tot');
-  localStorage.removeItem('mc_ai_tok_dom');
-  localStorage.removeItem('mc_ai_tok_costo');
-  document.getElementById('aiTokTotal').textContent = '0';
-  document.getElementById('aiTokSessione').textContent = '0';
-  document.getElementById('aiTokDomande').textContent = '0';
-  document.getElementById('aiTokCosto').textContent = '~$0.0000';
-  document.getElementById('aiTokenBar').style.width = '0%';
-  aiUpdateLimitBar();
-}
-
-function aiSaveLimit() {
-  const val = parseFloat(document.getElementById('aiLimitInput').value);
-  if (isNaN(val) || val <= 0) { aiShowError('Inserisci un limite valido (es. 5.00)'); return; }
-  aiLimite = val;
-  localStorage.setItem('mc_ai_limite', val);
-  aiUpdateLimitBar();
-}
-
-function aiUpdateLimitBar() {
-  const pct = aiLimite > 0 ? Math.min((aiCosto / aiLimite) * 100, 100) : 0;
-  const bar = document.getElementById('aiLimitBar');
-  const pctEl = document.getElementById('aiLimitPct');
-  bar.style.width = pct + '%';
-  bar.className = 'ai-limit-bar' + (pct >= 90 ? ' danger' : pct >= 70 ? ' warn' : '');
-  if (aiLimite > 0) {
-    pctEl.textContent = pct.toFixed(1) + '% del limite $' + aiLimite.toFixed(2) + ' · Residuo: $' + Math.max(aiLimite - aiCosto, 0).toFixed(4);
-    pctEl.className = 'ai-limit-pct' + (pct >= 90 ? ' danger' : pct >= 70 ? ' warn' : '');
-  } else {
-    pctEl.textContent = 'Nessun limite impostato';
-    pctEl.className = 'ai-limit-pct';
-  }
-}
-
-// Compatibilità funzioni vecchie (chiamate da altre parti)
-function domandaRapida(testo) { aiSetTranscript(testo, false); aiAskAI(testo); }
 
 
 const regaliDB = {
@@ -3694,7 +3034,6 @@ window.onload = () => {
   renderDocumenti();
   renderQuickWeekly();
   renderPromemoria();
-  aiInitUI();
   const n = localStorage.getItem('mc_note');
   if (n) document.getElementById('noteArea').value = n;
 
